@@ -1,6 +1,21 @@
+/**
+ * @file MuntingMasid.cpp
+ * @brief Implementasyon ng `MuntingMasid` class para sa pag-log gamit ang syslog-style severity levels.
+ */
+
 #include "MuntingMasid.h"
 
-MuntingMasid::MuntingMasid(Stream &stream, const char* appName, Severity minLevel, TimestampFunc tsFunc) : _stream(&stream), _appName(appName), _minLevel(minLevel), _timestampFunc(tsFunc) {}
+MuntingMasid::MuntingMasid(
+    Stream &stream,
+    const char* appName,
+    Severity minLevel,
+    TimestampFunc tsFunc
+) : 
+    _stream(&stream),
+    _appName(appName),
+    _minLevel(minLevel),
+    _timestampFunc(tsFunc)
+{}
 
 void MuntingMasid::setMinimumSeverity(Severity level) {
     _minLevel = level;
