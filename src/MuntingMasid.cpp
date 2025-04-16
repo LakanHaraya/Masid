@@ -14,11 +14,32 @@ MuntingMasid::MuntingMasid(
     _stream(&stream),
     _appName(appName),
     _minLevel(minLevel),
-    _timestampFunc(tsFunc)
+    _timestampFunc(tsFunc),
+    _tag(nullptr)
 {}
 
 void MuntingMasid::setMinimumSeverity(Severity level) {
     _minLevel = level;
+}
+
+void MuntingMasid::setTag(const char* tag) {
+    _tag = tag;
+}
+
+void MuntingMasid::showTimestamp(bool enabled) {
+    _showTimestamp = enabled;
+}
+
+void MuntingMasid::showSeverityLabel(bool enabled) {
+    _showSeverityLabel = enabled;
+}
+
+void MuntingMasid::showAppName(bool enabled) {
+    _showAppName = enabled;
+}
+
+void MuntingMasid::showTag(bool enabled) {
+    _showTag = enabled;
 }
 
 const char* MuntingMasid::_severityLabel(Severity severity) {
@@ -39,16 +60,28 @@ void MuntingMasid::_log(Severity severity, const char* message) {
     if (severity > _minLevel) return; 
 
     // Kung may timestamp function, tawagin ito at iprint ito sa stream
-    if (_timestampFunc) {
+    if (_showTimestamp && _timestampFunc) {
         _stream->print(_timestampFunc());
         _stream->print(" ");
     }
     
-    _stream->print("[");
-    _stream->print(_severityLabel(severity));
-    _stream->print("] [");
-    _stream->print(_appName);
-    _stream->print("] ");
+    if (_showSeverityLabel) {
+        _stream->print("[");
+        _stream->print(_severityLabel(severity));
+        _stream->print("] ");
+    }
+
+    if (_showTag && _tag) {
+        _stream->print("[");
+        _stream->print(_tag);
+        _stream->print("] ");
+    }
+
+    if (_showAppName) {
+        _stream->print("[");
+        _stream->print(_appName);
+        _stream->print("] ");
+    }
     _stream->println(message);
 }
 

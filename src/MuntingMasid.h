@@ -48,6 +48,18 @@ class MuntingMasid {
          * @param level Bagong minimum severity level.
          */
         void setMinimumSeverity(Severity level);
+        
+        /**
+         * @brief Itakda ang opsiyonal na tag para sa mga log
+         * 
+         * @param tag Ang string na magiging tag prefix ng bawat log entry.
+         */
+        void setTag(const char* tag);
+
+        void showTimestamp(bool enabled);
+        void showSeverityLabel(bool enabled);
+        void showAppName(bool enabled);
+        void showTag(bool enabled);
 
         /** 
          * @brief Pinaikling log function para sa `EMERGENCY`
@@ -110,6 +122,11 @@ class MuntingMasid {
         const char* _appName;           /** Pangalan ng application */
         Severity _minLevel;             /** Minimum na severity level */
         TimestampFunc _timestampFunc;   /** Function pointer para sa timestamp (kung meron) */
+        const char* _tag;
+        bool _showTimestamp = true;            /** Flag para sa pagpapakita ng timestamp */
+        bool _showSeverityLabel = true;        /** Flag para sa pagpapakita ng severity level */
+        bool _showAppName = true;              /** Flag para sa pagpapakita ng app name */
+        bool _showTag = true;                  /** Flag para sa pagpapakita ng tag */
 
         /**
          * @brief Kunin ang label ng severity bilang 4-character abbreviation.
