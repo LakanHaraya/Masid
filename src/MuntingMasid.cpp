@@ -4,6 +4,7 @@
  */
 
 #include "MuntingMasid.h"
+#include <stdarg.h>
 
 MuntingMasid::MuntingMasid(
     Stream &stream,
@@ -86,11 +87,27 @@ void MuntingMasid::_log(Severity severity, const char* message) {
 }
 
 // Pinaikling metodo
-void MuntingMasid::emergency(const char* message) { _log(EMERGENCY, message); }
-void MuntingMasid::alert(const char* message) { _log(ALERT, message); }
-void MuntingMasid::critical(const char* message) { _log(CRITICAL, message); }
-void MuntingMasid::error(const char* message) { _log(ERROR, message); }
-void MuntingMasid::warning(const char* message) { _log(WARNING, message); }
-void MuntingMasid::notice(const char* message) { _log(NOTICE, message); }
-void MuntingMasid::info(const char* message) { _log(INFO, message); }
-void MuntingMasid::debug(const char* message) { _log(DEBUG, message); }
+void MuntingMasid::emergency(const String& message) { 
+    _log(EMERGENCY, message.c_str()); 
+}
+void MuntingMasid::alert(const String& message) { 
+    _log(ALERT, message.c_str()); 
+}
+void MuntingMasid::critical(const String& message) { 
+    _log(CRITICAL, message.c_str()); 
+}
+void MuntingMasid::error(const String& message) { 
+    _log(ERROR, message.c_str()); 
+}
+void MuntingMasid::warning(const String& message) { 
+    _log(WARNING, message.c_str()); 
+}
+void MuntingMasid::notice(const String& message) { 
+    _log(NOTICE, message.c_str()); 
+}
+void MuntingMasid::info(const String& message) { 
+    _log(INFO, message.c_str()); 
+}
+void MuntingMasid::debug(const String& message) { 
+    _log(DEBUG, message.c_str()); 
+}

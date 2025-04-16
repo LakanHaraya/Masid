@@ -66,56 +66,56 @@ class MuntingMasid {
          * 
          * @param message Ang mismong mensahe na ilalabas sa output.
          */
-        void emergency(const char* message);  
+        void emergency(const String& message);  
 
         /** 
          * @brief Pinaikling log function para sa `ALERT`
          * 
          * @param message Ang mismong mensahe na ilalabas sa output.
          */
-        void alert(const char* message);
+        void alert(const String& message);
 
         /** 
          * @brief Pinaikling log function para sa `CRITICAL`
          * 
          * @param message Ang mismong mensahe na ilalabas sa output.
          */
-        void critical(const char* message);
+        void critical(const String& message);
 
         /** 
          * @brief Pinaikling log function para sa `ERROR`
          * 
          * @param message Ang mismong mensahe na ilalabas sa output.
          */
-        void error(const char* message);
+        void error(const String& message);
 
         /** 
          * @brief Pinaikling log function para sa `WARNING`
          * 
          * @param message Ang mismong mensahe na ilalabas sa output.
          */
-        void warning(const char* message);
+        void warning(const String& message);
 
         /** 
          * @brief Pinaikling log function para sa `NOTICE`
          * 
          * @param message Ang mismong mensahe na ilalabas sa output.
          */
-        void notice(const char* message);
+        void notice(const String& message);
 
         /** 
          * @brief Pinaikling log function para sa `INFO`
          * 
          * @param message Ang mismong mensahe na ilalabas sa output.
          */
-        void info(const char* message);
+        void info(const String& message);
 
         /** 
          * @brief Pinaikling log function para sa `DEBUG`
          * 
          * @param message Ang mismong mensahe na ilalabas sa output.
          */
-        void debug(const char* message);
+        void debug(const String& message);
 
     private: 
         Stream* _stream;                /** Pointer sa stream output */
