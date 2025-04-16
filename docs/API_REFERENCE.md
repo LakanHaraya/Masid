@@ -13,7 +13,6 @@ Ito ang detalyadong talaan ng mga magagamit na API
 | :-- | :-- |
 | [`MuntingMasid(...)`](#muntingmasidstream-stream-const-char-appname-severity-minlevel--debug-timestampfunc-tsfunc--nullptr) | Konstruktor – paglikha ng halimbagay |
 | [`setMinimumSeverity(...)`](#void-setminimumseverityseverity-level) | Itinatakda ang pinakamababang severity level na papayagan |
-| [`log(...)`](#void-logseverity-severity-const-char-message) | Pangkalahatang pamamaraan sa pag-log |
 | [`emergency(...)`](#mga-pinaikling-metodo) | Magsulat ng EMERGENCY log |
 | [`alert(...)`](#mga-pinaikling-metodo) | Magsulat ng ALERT log |
 | [`critical(...)`](#mga-pinaikling-metodo) | Magsulat ng CRITICAL log |
@@ -60,21 +59,6 @@ Lahat ng mas mababa rito ay hindi ilalabas.
 | Parameter | Uri | Paliwanag |
 |----------|-----|-----------|
 | `level` | `Severity` | Ang bagong threshold ng log filtering |
-
-</center>
-
----
-
-### `void log(Severity severity, const char* message)`
-
-**Layunin:** Isulat ang log message ayon sa ibinigay na severity.
-
-<center>
-
-| Parameter | Uri | Paliwanag |
-|----------|-----|-----------|
-| `severity` | `Severity` | Antas ng log message |
-| `message` | `const char*` | Mensaheng ilalabas |
 
 </center>
 

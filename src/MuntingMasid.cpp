@@ -35,7 +35,7 @@ const char* MuntingMasid::_severityLabel(Severity severity) {
     return labels[severity];
 }
 
-void MuntingMasid::log(Severity severity, const char* message) {
+void MuntingMasid::_log(Severity severity, const char* message) {
     if (severity > _minLevel) return; 
 
     // Kung may timestamp function, tawagin ito at iprint ito sa stream
@@ -53,11 +53,11 @@ void MuntingMasid::log(Severity severity, const char* message) {
 }
 
 // Pinaikling metodo
-void MuntingMasid::emergency(const char* message) { log(EMERGENCY, message); }
-void MuntingMasid::alert(const char* message) { log(ALERT, message); }
-void MuntingMasid::critical(const char* message) { log(CRITICAL, message); }
-void MuntingMasid::error(const char* message) { log(ERROR, message); }
-void MuntingMasid::warning(const char* message) { log(WARNING, message); }
-void MuntingMasid::notice(const char* message) { log(NOTICE, message); }
-void MuntingMasid::info(const char* message) { log(INFO, message); }
-void MuntingMasid::debug(const char* message) { log(DEBUG, message); }
+void MuntingMasid::emergency(const char* message) { _log(EMERGENCY, message); }
+void MuntingMasid::alert(const char* message) { _log(ALERT, message); }
+void MuntingMasid::critical(const char* message) { _log(CRITICAL, message); }
+void MuntingMasid::error(const char* message) { _log(ERROR, message); }
+void MuntingMasid::warning(const char* message) { _log(WARNING, message); }
+void MuntingMasid::notice(const char* message) { _log(NOTICE, message); }
+void MuntingMasid::info(const char* message) { _log(INFO, message); }
+void MuntingMasid::debug(const char* message) { _log(DEBUG, message); }

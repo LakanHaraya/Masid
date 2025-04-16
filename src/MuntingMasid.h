@@ -49,14 +49,6 @@ class MuntingMasid {
          */
         void setMinimumSeverity(Severity level);
 
-        /**
-         * @brief Mag-log ng mensahe na may tinukoy na severity.
-         * 
-         * @param severity Ang kalubhaan ng mensahe.
-         * @param message Ang mismong mensahe na ilalabas sa output.
-         */
-        void log(Severity severity, const char* message);
-
         /** 
          * @brief Pinaikling log function para sa `EMERGENCY`
          * 
@@ -126,4 +118,12 @@ class MuntingMasid {
          * @return `const char*` Ang katumbas na label string.
          */
         const char* _severityLabel(Severity severity);
+
+        /**
+         * @brief Mag-log ng mensahe na may tinukoy na severity.
+         * 
+         * @param severity Ang kalubhaan ng mensahe.
+         * @param message Ang mismong mensahe na ilalabas sa output.
+         */
+        void _log(Severity severity, const char* message);
 };
