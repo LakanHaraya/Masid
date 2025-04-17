@@ -71,10 +71,9 @@ void MuntingMasid::_log(Severity severity, const char* message) {
     if (_tag) {
         _stream->print("(");
         _stream->print(_tag);
-        _stream->print(")");
+        _stream->print(") ");
     }
 
-    _stream->print(" ");
     _stream->print(message);
 
     _stream->println(" ");
