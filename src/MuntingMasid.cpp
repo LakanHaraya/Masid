@@ -27,6 +27,14 @@ void MuntingMasid::setTag(const char* tag) {
     _tag = tag;
 }
 
+void MuntingMasid::setStream(Stream &stream) {
+    _stream = &stream;      // Pinapalitan ang stream sa bagong ibinigay na Stream object
+}
+
+void MuntingMasid::setTsFunc(TimestampFunc tsFunc) {
+    _timestampFunc = tsFunc;    // Pinapalitan ang timestamp function
+}
+
 const char* MuntingMasid::_severityLabel(Severity severity) {
     static const char* labels[] = {
         "KAGI", // Emergency

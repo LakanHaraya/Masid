@@ -31,9 +31,9 @@ typedef const char* (*TimestampFunc)();
  * na output stream, pangalan ng application, antas ng minimum na severity, timestamp function,
  * at opsiyonal na tag para sa karagdagang konteksto.
  * 
- * @param stream   Ang output stream kung saan ilalathala ang mga log (hal. `Serial`, `SoftwareSerial`, `File`, atbp.).
- * @param appName  Pangalan ng application o component na naglalabas ng log.
- * @param minLevel Minimum na severity level na ilalabas sa output. Default ay `DEBUG`.
+ * @param stream   Humihingi ng output stream kung saan ilalathala ang mga log (hal. `Serial`, `SoftwareSerial`, `File`, atbp.).
+ * @param appName  Humihingi ng pangalan ng application o component na naglalabas ng log.
+ * @param minLevel Itinatakda ang minimum na severity level na ilalabas sa output. Default ay `DEBUG`.
  * @param tsFunc   Opsiyonal na timestamp function na magbabalik ng string (hal. oras). Default ay `nullptr`.
  * @param tag      Opsiyonal na tag para sa mga log upang magbigay ng karagdagang konteksto. Default ay `nullptr`.
  * 
@@ -125,6 +125,9 @@ class MuntingMasid {
          * 
          */
         void setTag(const char* tag);
+
+        void setStream(Stream &stream);         // Bagong setter
+        void setTsFunc(TimestampFunc tsFunc);   // Bagong setter
 
         /** 
          * 
