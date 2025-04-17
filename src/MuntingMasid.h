@@ -3,17 +3,17 @@
 #include <Arduino.h>
 
 /**
- * @brief Mga antas ng kalubhaan para sa pag-log ng mensahe.
+ * @brief Mga antas ng kalubhaan (severity level) para sa pag-log ng mensahe.
  */
 enum Severity {
-    EMERGENCY,  /** KAGIPITAN: Hindi na maaaring maaaring magpatuloy ang sistema. */
-    ALERT,      /** ALERTO: Agarang aksiyon ay kinakailangan. */
-    CRITICAL,   /** KRITIKAL: Malubhang kondisyon ng sistema. */
-    ERROR,      /** KAMALIAN: Pangkalahatang pagkakamali. */
-    WARNING,    /** BABALA: Posibleng isyu o anomalya. */
-    NOTICE,     /** PANSIN: Karaniwan ngunit mahalagang kondisyon. */
-    INFO,       /** IMPORMASYON: Karaniwang operasyon ng sistema. */
-    DEBUG       /** DALISAP: Detalyado para sa debugging. */
+    EMERGENCY,  /**< KAGIPITAN: Hindi na maaaring maaaring magpatuloy ang sistema. */
+    ALERT,      /**< ALERTO: Agarang aksiyon ay kinakailangan. */
+    CRITICAL,   /**< KRITIKAL: Malubhang kondisyon ng sistema. */
+    ERROR,      /**< KAMALIAN: Pangkalahatang pagkakamali. */
+    WARNING,    /**< BABALA: Posibleng isyu o anomalya. */
+    NOTICE,     /**< PANSIN: Karaniwan ngunit mahalagang kondisyon. */
+    INFO,       /**< IMPORMASYON: Karaniwang operasyon ng sistema. */
+    DEBUG       /**< DALISAP: Detalyado para sa debugging. */
 };
 
 /**
@@ -37,41 +37,92 @@ typedef const char* (*TimestampFunc)();
  * @param tsFunc   Opsiyonal na timestamp function na magbabalik ng string (hal. oras). Default ay `nullptr`.
  * @param tag      Opsiyonal na tag para sa mga log upang magbigay ng karagdagang konteksto. Default ay `nullptr`.
  * 
- * @note Kung walang `timestamp function`, walang timestamp na ilalabas sa log output.
+ * @note - Kung walang `timestamp function`, walang timestamp na ilalabas sa log output.
+ * 
+ * @note - Ang makikitang log format sa output: `TIMESTAMP [SEVERITY] [APPNAME] (Tag) Brief message.`
  * 
  * ### Mga Halimbawa ng Paggamit:
  * 
  * ```
  * // Pinakasimple
  * MuntingMasid masid1(Serial, "Demo1");
+ * // Maglalabas: ` TIMESTAMP [DEBUG+] [Demo1] (Tag) Brief message. `
  * 
  * // May minimum severity
  * MuntingMasid masid2(Serial, "Demo2", INFO);
+ * // Maglalabas: ` TIMESTAMP [INFO+] [Demo2] (Tag) Brief message. `
  * 
  * // May timestamp function
- * MuntingMasid masid3(Serial, "Demo3", DEBUG, customTimestamp);
+ * MuntingMasid masid3(Serial, "Demo3", DEBUG, getMillis);
+ * // Maglalabas: ` 12345ms [DEBUG+] [Demo3] (Tag) Brief message. `
  * 
  * // Kompletong instantiation
  * MuntingMasid masid4(Serial, "Demo4", WARN, nullptr, "AkingTag");
+ * // Maglalabas: ` [---] [WARN+] [Demo4] (Tag) Brief message. `
  * ```
  */
 class MuntingMasid {
     public:
         MuntingMasid(Stream &stream, const char* appName, Severity minLevel = DEBUG, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
 
-        /**
+        /** 
+         * @brief Itinatakda ng pinakamababang severity level na dapat ilathala sa log output.
          * 
-         * @brief Itakda ng pinakamababang severity level na ilalabas sa output.
+         * Kapag tinawag, ang logger ay hindi na maglalabas ng mga log entry na may severity level
+         * na mas mababa sa itinakda. Halimbawa, kung itinakda sa `WARNING`, tanging mga mensaheng
+         * may kapantay at mataas na priyoridad tulad ng `WARNING`, `ERROR`, `CRITICAL`, at pataas lamang ang lalabas.
          * 
-         * @param level Bagong minimum severity level.
+         * #### Mga Antas ng Severity:
+         * 
+         * |– `EMERGENCY` – `[KAGI]`: Hindi na maaaring maaaring magpatuloy ang sistema.
+         * 
+         * |– `ALERT` – `[ALRT]`: Agarang aksiyon ay kinakailangan.
+         * 
+         * |– `CRITICAL` – `[KRIT]`: Malubhang kondisyon ng sistema.
+         * 
+         * |– `ERROR` – `[MALI]`: Pangkalahatang pagkakamali.
+         * 
+         * |– `WARNING` – `[BALA]`: Posibleng isyu o anomalya.
+         * 
+         * |– `NOTICE` – `[PNSN]`: Karaniwan ngunit mahalagang kondisyon. 
+         * 
+         * |– `INFO` – `[IMPO]`: Karaniwang operasyon ng sistema. 
+         * 
+         * |– `DEBUG` – `[DALI]`: Detalyado para sa debugging. 
+         * 
+         * @param[in] level Ang bagong minimum severity level (hal. `DEBUG`, `INFO`, `WARNING`, atbp.).
+         * 
+         * #### Halimbawa ng Paggamit:
+         * ```cpp
+         * masid.setMinSeverity(WARNING);
+         * masid.info("Hindi na ito lalabas.");       // Hindi ito ipapakita
+         * masid.error("May problema!");              // Ito ay ipapakita
+         * ```
          */
         void setMinSeverity(Severity level);
         
         /**
          * 
-         * @brief Itakda ang opsiyonal na tag para sa mga log
+         * @brief Itinatakda ang opsiyonal na tag na idadagdag sa bawat log entry para sa karagdagang konteksto.
          * 
-         * @param tag Ang string na magiging tag ng bawat log entry. Kung walang ilalagay, itakda sa `nullptr` .
+         * Maaaring gamitin ang tag upang tukuyin ang bahagi ng sistema, device ID, o anumang
+         * kategorya para sa mas madaling pag-trace ng log outputs. Kung walang tag na itatakda,
+         * maaaring itakda ito sa `nullptr` upang alisin.
+         * 
+         * @param[in] tag Isang C-string na magsisilbing tag sa bawat log line (hal. `"Sensor-A"`, `"GPS"`).  
+         * Gumamit ng `nullptr` kung walang nais gamitin na tag.
+         * 
+         * ### Halimbawa ng Paggamit:
+         * ```cpp
+         * masid.setTag("Sensor-A");
+         * masid.notice("Mababa ang signal."); 
+         * // Maglalabas: ` TIMESTAMP [SEVERITY] [APPNAME] (Sensor-A) Mababa ang signal. `
+         * 
+         * masid.setTag(nullptr);
+         * masid.notice("Walang tag na ito."); 
+         * // Maglalabas: ` TIMESTAMP [SEVERITY] [APPNAME] Mababa ang signal. `
+         * ```
+         * 
          */
         void setTag(const char* tag);
 
