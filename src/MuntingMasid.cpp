@@ -4,43 +4,27 @@
  */
 
 #include "MuntingMasid.h"
-#include <stdarg.h>
 
 MuntingMasid::MuntingMasid(
     Stream &stream,
     const char* appName,
     Severity minLevel,
-    TimestampFunc tsFunc
+    TimestampFunc tsFunc,
+    const char* tag
 ) : 
     _stream(&stream),
     _appName(appName),
     _minLevel(minLevel),
     _timestampFunc(tsFunc),
-    _tag(nullptr)
+    _tag(tag)
 {}
 
-void MuntingMasid::setMinimumSeverity(Severity level) {
+void MuntingMasid::setMinSeverity(Severity level) {
     _minLevel = level;
 }
 
 void MuntingMasid::setTag(const char* tag) {
     _tag = tag;
-}
-
-void MuntingMasid::showTimestamp(bool enabled) {
-    _showTimestamp = enabled;
-}
-
-void MuntingMasid::showSeverityLabel(bool enabled) {
-    _showSeverityLabel = enabled;
-}
-
-void MuntingMasid::showAppName(bool enabled) {
-    _showAppName = enabled;
-}
-
-void MuntingMasid::showTag(bool enabled) {
-    _showTag = enabled;
 }
 
 const char* MuntingMasid::_severityLabel(Severity severity) {
@@ -60,30 +44,32 @@ const char* MuntingMasid::_severityLabel(Severity severity) {
 void MuntingMasid::_log(Severity severity, const char* message) {
     if (severity > _minLevel) return; 
 
-    // Kung may timestamp function, tawagin ito at iprint ito sa stream
-    if (_showTimestamp && _timestampFunc) {
+    // Kung may timestamp function, tawagin ito at ilathala sa stream
+    if (_timestampFunc) {
         _stream->print(_timestampFunc());
-        _stream->print(" ");
+    } else {
+        _stream->print("[---]");      // Walang tinakda
     }
+    _stream->print(" ");
     
-    if (_showSeverityLabel) {
-        _stream->print("[");
-        _stream->print(_severityLabel(severity));
-        _stream->print("] ");
-    }
+    _stream->print("[");
+    _stream->print(_severityLabel(severity));
+    _stream->print("] ");
 
-    if (_showTag && _tag) {
-        _stream->print("[");
+    _stream->print("[");
+    _stream->print(_appName);
+    _stream->print("] ");
+
+    if (_tag) {
+        _stream->print("(");
         _stream->print(_tag);
-        _stream->print("] ");
+        _stream->print(")");
     }
 
-    if (_showAppName) {
-        _stream->print("[");
-        _stream->print(_appName);
-        _stream->print("] ");
-    }
-    _stream->println(message);
+    _stream->print(" ");
+    _stream->print(message);
+
+    _stream->println(" ");
 }
 
 // Pinaikling metodo
