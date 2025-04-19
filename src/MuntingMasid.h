@@ -126,8 +126,12 @@ class MuntingMasid {
          */
         void setTag(const char* tag);
 
-        void setStream(Stream &stream);         // Bagong setter
-        void setTsFunc(TimestampFunc tsFunc);   // Bagong setter
+        void setStream(Stream &stream);        
+        void setTsFunc(TimestampFunc tsFunc);   
+
+        size_t getLogCount() const;
+
+        void resetLogCount();
 
         /** 
          * 
@@ -297,6 +301,8 @@ class MuntingMasid {
         Severity _minLevel;             /** Minimum na severity level */
         TimestampFunc _timestampFunc;   /** Function pointer para sa timestamp (kung meron) */
         const char* _tag;
+
+        size_t _logCount = 0;           /** Bilang ng mga log entry */
 
         /**
          * @brief Kunin ang label ng severity bilang 4-character abbreviation.

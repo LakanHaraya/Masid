@@ -16,7 +16,8 @@ MuntingMasid::MuntingMasid(
     _appName(appName),
     _minLevel(minLevel),
     _timestampFunc(tsFunc),
-    _tag(tag)
+    _tag(tag),
+    _logCount(0)
 {}
 
 void MuntingMasid::setMinSeverity(Severity level) {
@@ -51,6 +52,8 @@ const char* MuntingMasid::_severityLabel(Severity severity) {
 
 void MuntingMasid::_log(Severity severity, const char* message) {
     if (severity > _minLevel) return; 
+
+    _logCount++;        // Itala ang bilang ng log entry
 
     // Kung may timestamp function, tawagin ito at ilathala sa stream
     if (_timestampFunc) {
@@ -103,4 +106,12 @@ void MuntingMasid::info(const String& message) {
 }
 void MuntingMasid::debug(const String& message) { 
     _log(DEBUG, message.c_str()); 
+}
+
+size_t MuntingMasid::getLogCount() const {
+    return _logCount;
+}
+
+void MuntingMasid::resetLogCount() {
+    _logCount = 0;
 }
