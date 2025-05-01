@@ -2,7 +2,8 @@
 ![Release](https://img.shields.io/github/v/release/LakanHaraya/Masid?include_prereleases)
 ![Malapamantayan](https://img.shields.io/badge/malapamantayan-LNDH--0061-purple)  
 ![Last Commit](https://img.shields.io/github/last-commit/LakanHaraya/Masid?label=last%20commit&style=flat-square)
-![First Commit](https://img.shields.io/badge/first%20commit-2025--04--12-blue)
+![First Commit](https://img.shields.io/badge/first%20commit-2025--04--12-FCD116)  
+![Language](https://img.shields.io/badge/language-Filipino%20(may%20neolohismo)-0038A8)
 
 Ang **Masid** ay isang magaan at modular na aklatan para sa paglagdas
 ng mensahe (*message logging*) ayon sa antas ng kalubhaan (*severity level*), gaya ng `DEBUG`,
