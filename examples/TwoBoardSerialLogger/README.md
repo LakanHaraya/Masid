@@ -1,10 +1,10 @@
 # Dalawang Uno Boards: Serial Logging sa Magkaibang Monitor
 
-📘 *Halimbawa ng paggamit ng MuntingMasid logging library para sa setup na may dalawang Arduino Uno boards na nagpapalitan ng log data sa pamamagitan ng USB at SoftwareSerial.*
+📘 *Halimbawa ng paggamit ng Masid logging library para sa setup na may dalawang Arduino Uno boards na nagpapalitan ng log data sa pamamagitan ng USB at SoftwareSerial.*
 
 ## Layunin
 
-Ipakita ang paggamit ng dalawang `MuntingMasid` logger:
+Ipakita ang paggamit ng dalawang `Masid` logger:
 - Isang logger (`mainLog`) na tumatakbo sa pangunahing `Serial`.
 - Isang logger (`altLog`) na tumatakbo sa `SoftwareSerial`.
 
