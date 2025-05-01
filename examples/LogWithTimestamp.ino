@@ -1,12 +1,12 @@
 #include <Arduino.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
 // Sample timestamp function
 const char* currentTimestamp() {
     return "2025-04-12T18:00:00Z";
 }
 
-MuntingMasid logger(Serial, "TalaOras", DEBUG, currentTimestamp);
+Masid logger(Serial, "TalaOras", DEBUG, currentTimestamp);
 
 void setup() {
     Serial.begin(115200);

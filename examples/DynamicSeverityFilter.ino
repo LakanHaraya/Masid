@@ -1,14 +1,14 @@
 #include <Arduino.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
-MuntingMasid logger(Serial, "DynamicSeverity", INFO);
+Masid logger(Serial, "DynamicSeverity", INFO);
 
 void setup() {
     Serial.begin(115200);
     logger.info("Info message - lalabas.");
     logger.debug("Debug message - hindi lalabas.");
 
-    logger.setMinimumSeverity(DEBUG);
+    logger.setMinSeverity(DEBUG);
     logger.debug("Ngayon lalabas na ang debug message.");
 }
 

@@ -1,11 +1,11 @@
 #include <Arduino.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
-MuntingMasid logger(Serial, "FilterDemo");
+Masid logger(Serial, "FilterDemo");
 
 void setup() {
     Serial.begin(115200);
-    logger.setMinimumSeverity(ERROR);
+    logger.setMinSeverity(ERROR);
 
     logger.debug("Hindi ito lalabas.");
     logger.warning("Hindi rin ito lalabas.");

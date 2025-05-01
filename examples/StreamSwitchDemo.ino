@@ -1,13 +1,13 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include <SD.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
 const int chipSelect = 10;
 const char* logFileName = "MASID003.TXT";
 
 File logFile;
-MuntingMasid logger(Serial, "SALUYAN", DEBUG, nullptr, "demo");  // Simula sa Serial stream
+Masid logger(Serial, "SALUYAN", DEBUG, nullptr, "demo");  // Simula sa Serial stream
 
 void setup() {
     Serial.begin(115200);

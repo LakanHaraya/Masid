@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
 // Regular function para sa custom timestamp
 const char* getTimestamp() {
@@ -11,8 +11,8 @@ const char* getTimestamp() {
 
 SoftwareSerial altSerial(10, 11); // RX, TX
 
-MuntingMasid mainLog(Serial, "Pangunahin", DEBUG, getTimestamp, "Puno-1");
-MuntingMasid altLog(altSerial, "Sekundarya", DEBUG, getTimestamp, "Puno-1");
+Masid mainLog(Serial, "Pangunahin", DEBUG, getTimestamp, "Puno-1");
+Masid altLog(altSerial, "Sekundarya", DEBUG, getTimestamp, "Puno-1");
 
 void setup() {
     Serial.begin(115200);

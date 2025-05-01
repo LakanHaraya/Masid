@@ -1,11 +1,11 @@
 /**
- * @file MuntingMasid.cpp
- * @brief Implementasyon ng `MuntingMasid` class para sa pag-log gamit ang syslog-style severity levels.
+ * @file Masid.cpp
+ * @brief Implementasyon ng `Masid` class para sa pag-log gamit ang syslog-style severity levels.
  */
 
-#include "MuntingMasid.h"
+#include "Masid.h"
 
-MuntingMasid::MuntingMasid(
+Masid::Masid(
     Stream &stream,
     const char* appName,
     Severity minLevel,
@@ -20,23 +20,23 @@ MuntingMasid::MuntingMasid(
     _logCount(0)
 {}
 
-void MuntingMasid::setMinSeverity(Severity level) {
+void Masid::setMinSeverity(Severity level) {
     _minLevel = level;
 }
 
-void MuntingMasid::setTag(const char* tag) {
+void Masid::setTag(const char* tag) {
     _tag = tag;
 }
 
-void MuntingMasid::setStream(Stream &stream) {
+void Masid::setStream(Stream &stream) {
     _stream = &stream;      // Pinapalitan ang stream sa bagong ibinigay na Stream object
 }
 
-void MuntingMasid::setTsFunc(TimestampFunc tsFunc) {
+void Masid::setTsFunc(TimestampFunc tsFunc) {
     _timestampFunc = tsFunc;    // Pinapalitan ang timestamp function
 }
 
-const char* MuntingMasid::_severityLabel(Severity severity) {
+const char* Masid::_severityLabel(Severity severity) {
     static const char* labels[] = {
         "KAGI", // Emergency
         "ALRT", // Alert
@@ -50,7 +50,7 @@ const char* MuntingMasid::_severityLabel(Severity severity) {
     return labels[severity];
 }
 
-void MuntingMasid::_log(Severity severity, const char* message) {
+void Masid::_log(Severity severity, const char* message) {
     if (severity > _minLevel) return; 
 
     _logCount++;        // Itala ang bilang ng log entry
@@ -83,35 +83,35 @@ void MuntingMasid::_log(Severity severity, const char* message) {
 }
 
 // Pinaikling metodo
-void MuntingMasid::emergency(const String& message) { 
+void Masid::emergency(const String& message) { 
     _log(EMERGENCY, message.c_str()); 
 }
-void MuntingMasid::alert(const String& message) { 
+void Masid::alert(const String& message) { 
     _log(ALERT, message.c_str()); 
 }
-void MuntingMasid::critical(const String& message) { 
+void Masid::critical(const String& message) { 
     _log(CRITICAL, message.c_str()); 
 }
-void MuntingMasid::error(const String& message) { 
+void Masid::error(const String& message) { 
     _log(ERROR, message.c_str()); 
 }
-void MuntingMasid::warning(const String& message) { 
+void Masid::warning(const String& message) { 
     _log(WARNING, message.c_str()); 
 }
-void MuntingMasid::notice(const String& message) { 
+void Masid::notice(const String& message) { 
     _log(NOTICE, message.c_str()); 
 }
-void MuntingMasid::info(const String& message) { 
+void Masid::info(const String& message) { 
     _log(INFO, message.c_str()); 
 }
-void MuntingMasid::debug(const String& message) { 
+void Masid::debug(const String& message) { 
     _log(DEBUG, message.c_str()); 
 }
 
-size_t MuntingMasid::getLogCount() const {
+size_t Masid::getLogCount() const {
     return _logCount;
 }
 
-void MuntingMasid::resetLogCount() {
+void Masid::resetLogCount() {
     _logCount = 0;
 }

@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
 // Regular function para sa custom timestamp
 const char* customTimestamp() {
@@ -10,7 +10,7 @@ const char* customTimestamp() {
 
 // Gumawa ng instance ng MuntingMasid
 Stream& serialStream = Serial;
-MuntingMasid logger(serialStream, "LoggerObj", DEBUG, nullptr);
+Masid logger(serialStream, "LoggerObj", DEBUG, nullptr);
 
 void setup() {
     // Inisyalisa ang Serial Monitor

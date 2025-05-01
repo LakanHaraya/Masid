@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
 char tsBuff[32];
 const char* getTimestamp() {
@@ -7,7 +7,7 @@ const char* getTimestamp() {
   return tsBuff;
 }
 
-MuntingMasid masid(Serial, "MasidDemo", DEBUG, nullptr, "KtrlLipad");
+Masid masid(Serial, "MasidDemo", DEBUG, nullptr, "KtrlLipad");
 
 void setup() {
   Serial.begin(115200);

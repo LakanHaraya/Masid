@@ -1,8 +1,8 @@
 #include <Arduino.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
 // Gumamit tayo ng Serial bilang output stream
-MuntingMasid masid(Serial, "SensorApp");
+Masid masid(Serial, "SensorApp");
 
 void setup() {
   Serial.begin(115200);

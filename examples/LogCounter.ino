@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
-MuntingMasid logger(
+Masid logger(
     Serial,
     "LoopApp",
     DEBUG,

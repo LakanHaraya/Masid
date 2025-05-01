@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <MuntingMasid.h>
+#include <Masid.h>
 
 // Timestamp function na nagpapabalik ng dummy value (pwede mong palitan ng millis-based kung gusto mo)
 const char* dummyTimestamp() {
@@ -7,7 +7,7 @@ const char* dummyTimestamp() {
 }
 
 // I-configure ang Serial at logger
-MuntingMasid masid(Serial, "KontrolerPad", INFO, dummyTimestamp);
+Masid masid(Serial, "KontrolerPad", INFO, dummyTimestamp);
 
 void setup() {
     Serial.begin(115200);
