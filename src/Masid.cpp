@@ -6,14 +6,15 @@
 #include "Masid.h"
 
 // Kompletong konstruktor
-Masid::Masid(Stream &stream, const char* logName, const char* tag, Severity minLevel, TimestampFunc tsFunc) 
+Masid::Masid(Stream &stream, const char* logName, Severity minLevel, TimestampFunc tsFunc, const char* tag) 
     : _stream(&stream),
-    _logName(logName),
-    _tag(tag),
-    _minLevel(minLevel),
-    _timestampFunc(tsFunc),
-    _logCount(0)
-{}
+      _logName(logName),
+      _minLevel(minLevel),
+      _timestampFunc(tsFunc ? tsFunc : defaultTs),
+      _tag(tag),
+      _logCount(0) {}
+
+// -----------------------------------------
 
 void Masid::setMinSeverity(Severity level) {
     _minLevel = level;
@@ -54,7 +55,7 @@ void Masid::_log(Severity severity, const char* message) {
     if (_timestampFunc) {
         _stream->print(_timestampFunc());
     } else {
-        _stream->print(" [---]");      // Walang tinakda
+        _stream->print("[---]");      // Walang tinakda
     }
     _stream->print(" ");
     
@@ -74,6 +75,21 @@ void Masid::_log(Severity severity, const char* message) {
 
     _stream->println(message);
 }
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+const char* Masid::defaultTs() {
+    static char tsBuff[32];  // Per-call instance, thread-unsafe pero acceptable sa Arduino
+    snprintf(tsBuff, sizeof(tsBuff), "%lums", millis());
+    return tsBuff;
+}
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 // Pinaikling metodo
 void Masid::emergency(const String& message) { 
