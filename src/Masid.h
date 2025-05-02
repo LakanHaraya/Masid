@@ -34,7 +34,7 @@ typedef const char* (*TimestampFunc)();
  * 
  * @note - Kung walang `timestamp function`, walang timestamp na ilalabas sa log output.
  * 
- * @note - Ang makikitang log format sa output: `TIMESTAMP [SEVERITY] [APPNAME] (Tag) Brief message.`
+ * @note - Ang makikitang log format sa output: `TIMESTAMP [SEVERITY] [LOGNAME] (Tag) Brief message.`
  * 
  * ### Mga Halimbawa ng Paggamit:
  * 
@@ -58,9 +58,9 @@ typedef const char* (*TimestampFunc)();
  */
 class Masid {
     public:
-        Masid(Stream &stream, const char* appName, Severity minLevel = DEBUG, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
+        Masid(Stream &stream, const char* logName, Severity minLevel = DEBUG, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
 
-        // Panlagdas (Logging)
+        // Lagdas (Log)
         void emergency(const String& message);  
         void alert(const String& message);
         void critical(const String& message);
@@ -79,16 +79,17 @@ class Masid {
 
         // Panguha (Getter)
         size_t getLogCount() const;
+        const char* getMinSeverity() const;
 
     private: 
         Stream* _stream;                /** Pointer sa stream output */
-        const char* _appName;           /** Pangalan ng application */
+        const char* _logName;           /** Pangalan ng lagdas */
         Severity _minLevel;             /** Minimum na severity level */
         TimestampFunc _timestampFunc;   /** Function pointer para sa timestamp (kung meron) */
         const char* _tag;
 
         size_t _logCount = 0;           /** Bilang ng mga log entry */
 
-        const char* _severityLabel(Severity severity);
+        const char* _severityLabel(Severity severity) const;
         void _log(Severity severity, const char* message);
 };

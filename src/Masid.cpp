@@ -7,13 +7,13 @@
 
 Masid::Masid(
     Stream &stream,
-    const char* appName,
+    const char* logName,
     Severity minLevel,
     TimestampFunc tsFunc,
     const char* tag
 ) : 
     _stream(&stream),
-    _appName(appName),
+    _logName(logName),
     _minLevel(minLevel),
     _timestampFunc(tsFunc),
     _tag(tag),
@@ -36,7 +36,7 @@ void Masid::setTsFunc(TimestampFunc tsFunc) {
     _timestampFunc = tsFunc;    // Pinapalitan ang timestamp function
 }
 
-const char* Masid::_severityLabel(Severity severity) {
+const char* Masid::_severityLabel(Severity severity) const {
     static const char* labels[] = {
         "KAGI", // Emergency
         "ALRT", // Alert
@@ -59,7 +59,7 @@ void Masid::_log(Severity severity, const char* message) {
     if (_timestampFunc) {
         _stream->print(_timestampFunc());
     } else {
-        _stream->print("[---]");      // Walang tinakda
+        _stream->print(" [---]");      // Walang tinakda
     }
     _stream->print(" ");
     
@@ -68,7 +68,7 @@ void Masid::_log(Severity severity, const char* message) {
     _stream->print("] ");
 
     _stream->print("[");
-    _stream->print(_appName);
+    _stream->print(_logName);
     _stream->print("] ");
 
     if (_tag) {
@@ -77,9 +77,7 @@ void Masid::_log(Severity severity, const char* message) {
         _stream->print(") ");
     }
 
-    _stream->print(message);
-
-    _stream->println(" ");
+    _stream->println(message);
 }
 
 // Pinaikling metodo
@@ -108,8 +106,16 @@ void Masid::debug(const String& message) {
     _log(DEBUG, message.c_str()); 
 }
 
+// ------------------------
+// Mga Panguhang Metodo
+// ------------------------
+
 size_t Masid::getLogCount() const {
     return _logCount;
+}
+
+const char* Masid::getMinSeverity() const {
+    return _severityLabel(_minLevel);
 }
 
 void Masid::resetLogCount() {
