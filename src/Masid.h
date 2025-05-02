@@ -58,7 +58,8 @@ typedef const char* (*TimestampFunc)();
  */
 class Masid {
     public:
-        Masid(Stream &stream, const char* logName, Severity minLevel = DEBUG, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
+        // Kompletong konstruktor
+        Masid(Stream &stream, const char* logName, const char* tag = nullptr, Severity minLevel = DEBUG, TimestampFunc tsFunc = nullptr);
 
         // Lagdas (Log)
         void emergency(const String& message);  
@@ -82,12 +83,11 @@ class Masid {
         const char* getMinSeverity() const;
 
     private: 
-        Stream* _stream;                /** Pointer sa stream output */
-        const char* _logName;           /** Pangalan ng lagdas */
-        Severity _minLevel;             /** Minimum na severity level */
-        TimestampFunc _timestampFunc;   /** Function pointer para sa timestamp (kung meron) */
+        Stream* _stream;
+        const char* _logName;
         const char* _tag;
-
+        Severity _minLevel;
+        TimestampFunc _timestampFunc;
         size_t _logCount = 0;           /** Bilang ng mga log entry */
 
         const char* _severityLabel(Severity severity) const;

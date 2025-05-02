@@ -5,18 +5,13 @@
 
 #include "Masid.h"
 
-Masid::Masid(
-    Stream &stream,
-    const char* logName,
-    Severity minLevel,
-    TimestampFunc tsFunc,
-    const char* tag
-) : 
-    _stream(&stream),
+// Kompletong konstruktor
+Masid::Masid(Stream &stream, const char* logName, const char* tag, Severity minLevel, TimestampFunc tsFunc) 
+    : _stream(&stream),
     _logName(logName),
+    _tag(tag),
     _minLevel(minLevel),
     _timestampFunc(tsFunc),
-    _tag(tag),
     _logCount(0)
 {}
 
