@@ -7,7 +7,7 @@ const char* getTimestamp() {
   return tsBuff;
 }
 
-Masid masid(Serial, "MasidDemo", DEBUG, nullptr, "KtrlLipad");
+Masid masid(Serial, "MasidDemo", Masid::DEBUG, nullptr, "KtrlLipad");
 
 void setup() {
   Serial.begin(115200);
@@ -17,7 +17,7 @@ void setup() {
   masid.setTag(nullptr);    // Palitan ng `getTimestamp`
 
   // (Optional) I-set ang minimum log level (default ay DEBUG)
-  masid.setMinSeverity(INFO);   // Palitan ng `DEBUG` o iba pang severity level
+  masid.setMinSeverity(Masid::INFO);   // Palitan ng `DEBUG` o iba pang severity level
 
   // Mag-log gamit ang iba't ibang severity
   masid.emergency("Nabigo ang sistema!");
