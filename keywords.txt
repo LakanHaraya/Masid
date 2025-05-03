@@ -1,0 +1,33 @@
+####################################
+# Masid Library Keywords
+####################################
+
+Masid       KEYWORD1
+Severity    KEYWORD2
+
+Masid::EMERGENCY    LITERAL1
+Masid::ALERT        LITERAL1
+Masid::CRITICAL     LITERAL1
+Masid::ERROR        LITERAL1
+Masid::WARNING  LITERAL1
+Masid::NOTICE   LITERAL1
+Masid::INFO     LITERAL1
+Masid::DEBUG    LITERAL1
+
+emergency   KEYWORD2
+alert       KEYWORD2
+critical    KEYWORD2
+error       KEYWORD2
+warning     KEYWORD2
+notice      KEYWORD2
+info        KEYWORD2
+debug       KEYWORD2
+
+setMinSeverity  KEYWORD2
+setTag          KEYWORD2
+setStream       KEYWORD2
+setTsFunc       KEYWORD2
+resetLogCount   KEYWORD2
+
+getLogCount     KEYWORD2
+getMinSeverity  KEYWORD2

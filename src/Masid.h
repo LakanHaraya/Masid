@@ -30,15 +30,15 @@ typedef const char* (*TimestampFunc)();
  * // Maglalabas: ` TIMESTAMP [DEBUG+] [Demo1] (Tag) Brief message. `
  * 
  * // May minimum severity
- * Masid masid2(Serial, "Demo2", INFO);
+ * Masid masid2(Serial, "Demo2", Masid::INFO);
  * // Maglalabas: ` TIMESTAMP [INFO+] [Demo2] (Tag) Brief message. `
  * 
  * // May timestamp function
- * Masid masid3(Serial, "Demo3", DEBUG, getMillis);
+ * Masid masid3(Serial, "Demo3", Masid::DEBUG, getMillis);
  * // Maglalabas: ` 12345ms [DEBUG+] [Demo3] (Tag) Brief message. `
  * 
  * // Kompletong instantiation
- * Masid masid4(Serial, "Demo4", WARN, nullptr, "AkingTag");
+ * Masid masid4(Serial, "Demo4", Masid::WARN, nullptr, "AkingTag");
  * // Maglalabas: ` [---] [WARN+] [Demo4] (Tag) Brief message. `
  * ```
  */
