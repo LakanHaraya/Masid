@@ -103,14 +103,14 @@ priyoridad hanggang sa pinakamababa:
 
 | Value | Marka | Paliwanag |
 |------|-----------|-------|
-| `EMERGENCY` | `[KAGI]` | Pangkagipitan |
-| `ALERT`     | `[ALRT]` | Dapat tugunan agad |
-| `CRITICAL`  | `[KRIT]` | Malubhang error |
-| `ERROR`     | `[MALI]` | Pangkalahatang pagkakamali |
-| `WARNING`   | `[BALA]` | Babala |
-| `NOTICE`    | `[PNSN]` | Karaniwang obserbasyon |
-| `INFO`      | `[IMPO]` | Pangkalahatang impormasyon |
-| `DEBUG`     | `[DALI]` | Debugging detail |
+| `Masid::EMERGENCY` | `[KAGI]` | Pangkagipitan |
+| `Masid::ALERT`     | `[ALRT]` | Dapat tugunan agad |
+| `Masid::CRITICAL`  | `[KRIT]` | Malubhang error |
+| `Masid::ERROR`     | `[MALI]` | Pangkalahatang pagkakamali |
+| `Masid::WARNING`   | `[BALA]` | Babala |
+| `Masid::NOTICE`    | `[PNSN]` | Karaniwang obserbasyon |
+| `Masid::INFO`      | `[IMPO]` | Pangkalahatang impormasyon |
+| `Masid::DEBUG`     | `[DALI]` | Debugging detail |
 
 </center>
 

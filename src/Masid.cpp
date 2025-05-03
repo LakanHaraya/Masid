@@ -78,28 +78,28 @@ void Masid::_log(Severity severity, const char* message) {
 
 // Pinaikling metodo
 void Masid::emergency(const String& message) { 
-    _log(EMERGENCY, message.c_str()); 
+    _log(Masid::EMERGENCY, message.c_str()); 
 }
 void Masid::alert(const String& message) { 
-    _log(ALERT, message.c_str()); 
+    _log(Masid::ALERT, message.c_str()); 
 }
 void Masid::critical(const String& message) { 
-    _log(CRITICAL, message.c_str()); 
+    _log(Masid::CRITICAL, message.c_str()); 
 }
 void Masid::error(const String& message) { 
-    _log(ERROR, message.c_str()); 
+    _log(Masid::ERROR, message.c_str()); 
 }
 void Masid::warning(const String& message) { 
-    _log(WARNING, message.c_str()); 
+    _log(Masid::WARNING, message.c_str()); 
 }
 void Masid::notice(const String& message) { 
-    _log(NOTICE, message.c_str()); 
+    _log(Masid::NOTICE, message.c_str()); 
 }
 void Masid::info(const String& message) { 
-    _log(INFO, message.c_str()); 
+    _log(Masid::INFO, message.c_str()); 
 }
 void Masid::debug(const String& message) { 
-    _log(DEBUG, message.c_str()); 
+    _log(Masid::DEBUG, message.c_str()); 
 }
 
 // ------------------------

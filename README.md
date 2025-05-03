@@ -6,8 +6,8 @@
 ![Language](https://img.shields.io/badge/language-Filipino%20(may%20neolohismo)-0038A8)
 
 Ang **Masid** ay isang magaan at modular na aklatan para sa paglagdas
-ng mensahe (*message logging*) ayon sa antas ng kalubhaan (*severity level*), gaya ng `DEBUG`,
-`INFO`, `ERROR`, atbp., batay sa lohika ng syslog sa [RFC 5424:2009](https://datatracker.ietf.org/doc/html/rfc5424). 
+ng mensahe (*message logging*) ayon sa antas ng kalubhaan (*severity level*), gaya ng `Masid::DEBUG`,
+`Masid::INFO`, `Masid::ERROR`, atbp., batay sa lohika ng syslog sa [RFC 5424:2009](https://datatracker.ietf.org/doc/html/rfc5424). 
 
 Ginagamit nito ang anumang `Stream` objek (gaya ng `Serial`, `SoftwareSerial`, `File`, atbp.) bilang output ng lagdas, na maaaring ikahon gamit ang tatakna (*timestamp*) at ngalan ng aplikasyon.
 

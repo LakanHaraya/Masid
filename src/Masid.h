@@ -2,20 +2,6 @@
 
 #include <Arduino.h>
 
-/**
- * @brief Mga antas ng kalubhaan (severity level) para sa pag-log ng mensahe.
- */
-enum Severity {
-    EMERGENCY,  /**< KAGIPITAN: Hindi na maaaring maaaring magpatuloy ang sistema. */
-    ALERT,      /**< ALERTO: Agarang aksiyon ay kinakailangan. */
-    CRITICAL,   /**< KRITIKAL: Malubhang kondisyon ng sistema. */
-    ERROR,      /**< KAMALIAN: Pangkalahatang pagkakamali. */
-    WARNING,    /**< BABALA: Posibleng isyu o anomalya. */
-    NOTICE,     /**< PANSIN: Karaniwan ngunit mahalagang kondisyon. */
-    INFO,       /**< IMPORMASYON: Karaniwang operasyon ng sistema. */
-    DEBUG       /**< DALISAP: Detalyado para sa debugging. */
-};
-
 typedef const char* (*TimestampFunc)();
 
 /**
@@ -26,11 +12,11 @@ typedef const char* (*TimestampFunc)();
  * na output stream, pangalan ng application, antas ng minimum na severity, timestamp function,
  * at opsiyonal na tag para sa karagdagang konteksto.
  * 
- * @param stream   Humihingi ng output stream kung saan ilalathala ang mga log (hal. `Serial`, `SoftwareSerial`, `File`, atbp.).
- * @param appName  Humihingi ng pangalan ng application o component na naglalabas ng log.
- * @param minLevel Itinatakda ang minimum na severity level na ilalabas sa output. Default ay `DEBUG`.
- * @param tsFunc   Opsiyonal na timestamp function na magbabalik ng string (hal. oras). Default ay `nullptr`.
- * @param tag      Opsiyonal na tag para sa mga log upang magbigay ng karagdagang konteksto. Default ay `nullptr`.
+ * @param stream   (Hinihingi) Output stream kung saan ilalathala ang mga log (hal. `Serial`, `SoftwareSerial`, `File`, atbp.).
+ * @param logName  (Hinihingi) Pangalan ng logger o component na naglalabas ng log.
+ * @param minLevel (Opsiyonal) Itakda ang minimum na severity level na ilalabas sa output. Default ay `Masid::DEBUG`.
+ * @param tsFunc   (Opsiyonal) Timestamp function na magbabalik ng string (hal. oras). Default ay `nullptr`.
+ * @param tag      (Opsiyonal) Tag para sa mga log upang magbigay ng karagdagang konteksto. Default ay `nullptr`.
  * 
  * @note - Kung walang `timestamp function`, walang timestamp na ilalabas sa log output.
  * 
@@ -58,8 +44,19 @@ typedef const char* (*TimestampFunc)();
  */
 class Masid {
     public:
+        enum Severity : uint8_t {
+            EMERGENCY,  /**< KAGIPITAN: Hindi na maaaring maaaring magpatuloy ang sistema. */
+            ALERT,      /**< ALERTO: Agarang aksiyon ay kinakailangan. */
+            CRITICAL,   /**< KRITIKAL: Malubhang kondisyon ng sistema. */
+            ERROR,      /**< KAMALIAN: Pangkalahatang pagkakamali. */
+            WARNING,    /**< BABALA: Posibleng isyu o anomalya. */
+            NOTICE,     /**< PANSIN: Karaniwan ngunit mahalagang kondisyon. */
+            INFO,       /**< IMPORMASYON: Karaniwang operasyon ng sistema. */
+            DEBUG       /**< DALISAP: Detalyado para sa debugging. */
+        };
+
         // Kompletong konstruktor
-        Masid(Stream &stream, const char* logName, Severity minLevel = DEBUG, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
+        Masid(Stream &stream, const char* logName, Severity minLevel = Masid::DEBUG, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
 
         // Lagdas (Log)
         void emergency(const String& message);  
