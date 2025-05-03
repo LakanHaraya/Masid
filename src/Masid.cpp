@@ -10,7 +10,7 @@ Masid::Masid(Stream &stream, const char* logName, Severity minLevel, TimestampFu
     : _stream(&stream),
       _logName(logName),
       _minLevel(minLevel),
-      _timestampFunc(tsFunc ? tsFunc : defaultTs),
+      _timestampFunc(tsFunc),
       _tag(tag),
       _logCount(0) {}
 
@@ -75,21 +75,6 @@ void Masid::_log(Severity severity, const char* message) {
 
     _stream->println(message);
 }
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-const char* Masid::defaultTs() {
-    static char tsBuff[32];  // Per-call instance, thread-unsafe pero acceptable sa Arduino
-    snprintf(tsBuff, sizeof(tsBuff), "%lums", millis());
-    return tsBuff;
-}
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
 // Pinaikling metodo
 void Masid::emergency(const String& message) { 

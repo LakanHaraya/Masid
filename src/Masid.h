@@ -82,9 +82,6 @@ class Masid {
         size_t getLogCount() const;
         const char* getMinSeverity() const;
 
-        // Utilidad
-        static const char* defaultTs();
-
     private: 
         Stream* _stream;
         const char* _logName;
