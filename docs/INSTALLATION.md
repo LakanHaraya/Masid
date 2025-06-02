@@ -1,49 +1,77 @@
-# `MuntingMasid/` – *Installation, Verification, and Uninstallation*
+# `Masid/` – *Installation, Verification, and Uninstallation*
 
-Sa seksiyong ito, ipapakita ang mga hakbang upang matagumpay na ma-install, magamit, at ma-uninstall ang MuntingMasid library.
-
-- [Installation](#installation)  
-  - [Paraan 1: Paggamit ng PlatformIO](#paraan-2-paggamit-ng-platformio)
-- [Verification of Installation](#verification-of-installation)  
-- [Uninstallation](#uninstallation)  
-  - [PlatformIO](#platformio)  
+Ang dokumentong ito ay naglalaman ng kompletong 
+gabay para sa **Installation**, **Verification**,
+at **Uninstallation** ng `Masid/` library, gamit ang
+alinman sa **Arduino IDE** o **PlatformIO**
 
 ---
-## Installation
 
-### Paraan 1: *Paggamit ng PlatformIO*
+- [Arduino IDE (Manual)](#arduino-ide-manual-library-manager)
+   - [Installation](#installation)
+   - [Verification](#verification)
+   - [Uninstallation](#uninstallation)
+- [PlatformIO](#platformio)
+   - [Installation](#installation-1)
+   - [Verification](#verification-1)
+   - [Uninstallation](#uninstallation-1)
 
-1. **I-install ang PlatformIO**  
-   Kung wala ka pang PlatformIO, i-install ito mula sa [PlatformIO website](https://platformio.org/) o gamit ang Visual Studio Code.
+---
 
-2. **I-clone ang Repository**  
-   Buksan ang terminal at i-clone ang repository gamit ang git:
-   ```bash
-   git clone https://github.com/LakanHaraya/MuntingMasid.git
-   ```
+## <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Logo.svg" alt="Arduino Logo" width="50" style="vertical-align:middle;"/> Arduino IDE (Manual) (~~Library Manager~~)
 
-3. **Idagdag ang Library sa PlatformIO Project**
+### Installation <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Logo.svg" alt="Arduino Logo" width="20" style="vertical-align:middle;"/>
 
-   - Buksan ang iyong PlatformIO project.
-   - Kopyahin ang buong `MuntingMasid` folder sa `lib/` directory ng iyong PlatformIO project.
+1.  Bisitahin ang [Masid Github repository](https://github.com/LakanHaraya/Masid.git)
+2. I-click ang **Code** > **Download ZIP** upang i-download ang `.zip` file ng library
+3. Buksan ang **Arduino IDE**
+4. Pumunta sa `Sketch` > `Include Library` > `Add .ZIP Library...`
+5. Piliin ang na-download na `.zip` file mula sa iyong file explorer
+6. Kapag matagumpay, makikita ang `Masid` sa `Sketch` > `Include Library`
 
-4. **Gamitin ang Library sa iyong Code**
+### Verification <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Logo.svg" alt="Arduino Logo" width="20" style="vertical-align:middle;"/>
 
-   - Sa iyong source file (.cpp o .ino), idagdag ang sumusunod na linya:
+1. Sa Arduino IDE, pumunta sa `File` > `Examples` > `Masid`
+2. Piliin ang isa sa mga halimbawa at i-upload ito sa iyong board
+3. Kung gumagana ang sketch, matagumpay ang pag-install
 
+### Uninstallation <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Logo.svg" alt="Arduino Logo" width="20" style="vertical-align:middle;"/>
+
+1. Hanapin ang lokasyon ng Library  
+   - Default folder:
+      - **Windows:** `Documents/Arduino/libraries/`
+      - **macOS:** `~/Documents/Arduino/libraries/`
+      - **Linux:** `~/Arduino/libraries/`
+2. Hanapin ang `Masid` folder at **i-delete** ito mula sa `libraries/`
+3. I-restart ang IDE upang ma-refresh ang listahan ng libraries
+4. Tingnan ang `Sketch` > `Include Library` — dapat wala na ang `Masid`
+
+---
+
+## <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/PlatformIO_logo.svg" alt="PlatformIO" width="40" style="vertical-align:middle;"/> PlatformIO
+
+
+### Installation <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/PlatformIO_logo.svg" alt="PlatformIO" width="20" style="vertical-align:middle;"/>
+
+1. I-clone ang repositoryo
+   ``` bash
+   git clone https://github.com/LakanHaraya/Masid.git
+   ``` 
+2. Kopyahin ang `Masid/` folder papunta sa `lib/` directory ng iyong PlatformIO project
+3. I-include sa iyong code
    ``` cpp
-   #include <MuntingMasid.h>
+   #include <Masid.h>
    ```
+4. I-compile at i-upload ang proyekto gamit ang PlatformIO
 
-5. **I-build at I-upload ang Proyekto**
-Matapos idagdag ang library, i-compile at i-upload ang iyong code sa iyong board.
+### Verification <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/PlatformIO_logo.svg" alt="PlatformIO" width="20" style="vertical-align:middle;"/>
+1. Buksan ang isang halimbawa mula sa `examples/` folder ng `Masid` repository
+2. Ilagay ito sa `src/` ng iyong PlatformIO project
+3. I-build at i-upload ito sa iyong board
+4. Kung walang error at gumagana ang sketch, matagumpay ang pag-install
 
-## Verification of Installation
-Upang matiyak na tama ang pag-install ng library, subukan ang isang halimbawa mula sa [`examples/`](../examples/) folder. Maaari mong buksan ang isa sa mga halimbawa at i-upload ito sa iyong board.
+### Uninstallation <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/PlatformIO_logo.svg" alt="PlatformIO" width="20" style="vertical-align:middle;"/>
+1. Burahin ang `Masid/` folder mula sa `lib/` directory ng iyong PlatformIO project
+2. Hindi kailangang i-restart ang VSCode o PlatformIO; matatanggal na ito agad sa build system
 
-## Uninstallation
-Kung nais mong tanggalin ang library mula sa *PlatformIO*, sundin ang mga sumusunod:
-
-### *PlatformIO:*
-- Tanggalin ang folder ng `MuntingMasid` mula sa `lib/` directory ng iyong proyekto.
-
+---
