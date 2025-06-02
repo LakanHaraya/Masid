@@ -7,7 +7,7 @@ const char* dummyTimestamp() {
 }
 
 // I-configure ang Serial at logger
-Masid masid(Serial, "KontrolerPad", INFO, dummyTimestamp);
+Masid masid(Serial, "KontrolerPad", Masid::INFO, dummyTimestamp);
 
 void setup() {
     Serial.begin(115200);

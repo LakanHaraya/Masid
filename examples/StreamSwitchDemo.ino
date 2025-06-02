@@ -7,7 +7,7 @@ const int chipSelect = 10;
 const char* logFileName = "MASID003.TXT";
 
 File logFile;
-Masid logger(Serial, "SALUYAN", DEBUG, nullptr, "demo");  // Simula sa Serial stream
+Masid logger(Serial, "SALUYAN", Masid::DEBUG, nullptr, "demo");  // Simula sa Serial stream
 
 void setup() {
     Serial.begin(115200);

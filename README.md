@@ -41,7 +41,14 @@ Ginagamit nito ang anumang `Stream` objek (gaya ng `Serial`, `SoftwareSerial`, `
 - Flexible na reconfiguration gamit ang `setStream()`, `setTag()`, at `setTsFunc()` methods.
 - May format ng log messages gaya ng: 
     ``` sh
-    TIMESTAMP [SEVERITY] [APPNAME] (TAG) Brief message...
+    [TIMESTAMP] [SEVERITY] [LOGNAME] (CTAG) Maikling mensahe.
+    ```
+    Halimbawa:
+    ``` sh
+    [2025-06-02T12:34:56] [IMPO] [Angkla] (INIS) Inisyalisasyon ng sistema.
+    ```
+    ``` sh
+    [---] [MALI] [KtrlrPad] Nabigo ang komunikasyon! 
     ```
 
 ---

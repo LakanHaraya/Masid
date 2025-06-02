@@ -5,7 +5,7 @@ Masid logger(Serial, "FilterDemo");
 
 void setup() {
     Serial.begin(115200);
-    logger.setMinSeverity(ERROR);
+    logger.setMinSeverity(Masid::ERROR);
 
     logger.debug("Hindi ito lalabas.");
     logger.warning("Hindi rin ito lalabas.");

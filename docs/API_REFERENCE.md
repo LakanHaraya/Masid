@@ -1,4 +1,4 @@
-# 📘 `MuntingMasid/` – *API Reference*
+# 📘 `Masid/` – *API Reference*
 
 Ito ang detalyadong talaan ng mga magagamit na API
 (Application Programming Interface) ng aklatan ng **MuntingMasid**.
@@ -39,7 +39,7 @@ Ito ang detalyadong talaan ng mga magagamit na API
 | Parameter | Uri | Paliwanag |
 |----------|-----|-----------|
 | `stream` | `Stream&` | Stream object (tulad ng `Serial`) kung saan ipapalabas ang mga log |
-| `appName` | `const char*` | Pangalan ng application na ilalagay sa log |
+| `logName` | `const char*` | Pangalan ng application na ilalagay sa log |
 | `minLevel` | `Severity` | *Opsiyonal*. Pinakamababang log level na tatanggapin. Default: `DEBUG` |
 | `tsFunc` | `TimestampFunc` | *Opsiyonal*. Function pointer para sa custom timestamp function |
 
@@ -73,13 +73,13 @@ Mga pinaikling paraan para magsulat ng log sa partikular na severity level:
 | Metodo | Layunin |
 |--------|---------|
 | `void emergency(const char* message)` | Log bilang `EMERGENCY` |
-| `void alert(const char* message)` | Log bilang `ALERT` |
-| `void critical(const char* message)` | Log bilang `CRITICAL` |
-| `void error(const char* message)` | Log bilang `ERROR` |
-| `void warning(const char* message)` | Log bilang `WARNING` |
-| `void notice(const char* message)` | Log bilang `NOTICE` |
-| `void info(const char* message)` | Log bilang `INFO` |
-| `void debug(const char* message)` | Log bilang `DEBUG` |
+| `void alert(const char* message)`     | Log bilang `ALERT` |
+| `void critical(const char* message)`  | Log bilang `CRITICAL` |
+| `void error(const char* message)`     | Log bilang `ERROR` |
+| `void warning(const char* message)`   | Log bilang `WARNING` |
+| `void notice(const char* message)`    | Log bilang `NOTICE` |
+| `void info(const char* message)`      | Log bilang `INFO` |
+| `void debug(const char* message)`     | Log bilang `DEBUG` |
 
 </center>
 

@@ -10,7 +10,7 @@ const char* customTimestamp() {
 
 // Gumawa ng instance ng MuntingMasid
 Stream& serialStream = Serial;
-Masid logger(serialStream, "LoggerObj", DEBUG, nullptr);
+Masid logger(serialStream, "LoggerObj", Masid::DEBUG, nullptr);
 
 void setup() {
     // Inisyalisa ang Serial Monitor

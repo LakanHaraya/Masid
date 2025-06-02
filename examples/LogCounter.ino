@@ -4,7 +4,7 @@
 Masid logger(
     Serial,
     "LoopApp",
-    DEBUG,
+    Masid::DEBUG,
     []() -> const char* {
         static char buf[16];
         sprintf(buf, "[%lu]", millis());

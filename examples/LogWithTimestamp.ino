@@ -6,7 +6,7 @@ const char* currentTimestamp() {
     return "2025-04-12T18:00:00Z";
 }
 
-Masid logger(Serial, "TalaOras", DEBUG, currentTimestamp);
+Masid logger(Serial, "TalaOras", Masid::DEBUG, currentTimestamp);
 
 void setup() {
     Serial.begin(115200);
