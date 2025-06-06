@@ -6,7 +6,7 @@
 ![Language](https://img.shields.io/badge/language-Filipino%20(may%20neolohismo)-0038A8)
 [![Mga Pagkilala](https://img.shields.io/badge/%F0%9F%93%9D-CHANGELOG-blue)](docs/CHANGELOG.md)
 
-# *Magmamasid at Aakto para sa Sistema ng Impormasyon at Diyagnostika*
+# *Magmamasid na Alalay para sa Sistemang Impormasyon at Diyagnostika*
 
 <div align="center">
 
