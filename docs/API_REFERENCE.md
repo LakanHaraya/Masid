@@ -11,8 +11,7 @@ Ito ang detalyadong talaan ng mga magagamit na API
 
 | API | Paggamit |
 | :-- | :-- |
-| [`MuntingMasid(...)`](#muntingmasidstream-stream-const-char-appname-severity-minlevel--debug-timestampfunc-tsfunc--nullptr) | Konstruktor – paglikha ng halimbagay |
-| [`setMinimumSeverity(...)`](#void-setminimumseverityseverity-level) | Itinatakda ang pinakamababang severity level na papayagan |
+| [`Masid`](#muntingmasidstream-stream-const-char-appname-severity-minlevel--debug-timestampfunc-tsfunc--nullptr) | Konstruktor – paglikha ng halimbagay |
 | [`emergency(...)`](#mga-pinaikling-metodo) | Magsulat ng EMERGENCY log |
 | [`alert(...)`](#mga-pinaikling-metodo) | Magsulat ng ALERT log |
 | [`critical(...)`](#mga-pinaikling-metodo) | Magsulat ng CRITICAL log |
@@ -21,7 +20,22 @@ Ito ang detalyadong talaan ng mga magagamit na API
 | [`notice(...)`](#mga-pinaikling-metodo) | Magsulat ng NOTICE log |
 | [`info(...)`](#mga-pinaikling-metodo) | Magsulat ng INFO log |
 | [`debug(...)`](#mga-pinaikling-metodo) | Magsulat ng DEBUG log |
-| [`Severity`](#enum-severity) | Enum ng mga antas ng log severity |
+| [`setMinSeverity(...)`](#void-setminimumseverityseverity-level) | Itinatakda ang pinakamababang severity level na papayagang itala |
+| [`setTag(...)`]() | |
+| [`setStream(...)`]() | |
+| [`setTsFunc(...)`]() | |
+| [`resetLogCount(...)`]() | |
+| [`getLogCount()`]() | |
+| [`setTag(...)`]() | |
+| [`getMinSeverity(...)`]() | |
+| [`Masid::EMERGENCY`](#enum-severity) | |
+| [`Masid::ALERT`](#enum-severity) | |
+| [`Masid::CRITICAL`](#enum-severity) | |
+| [`Masid::ERROR`](#enum-severity) | |
+| [`Masid::WARNING`](#enum-severity) | |
+| [`Masid::NOTICE`](#enum-severity) | |
+| [`Masid::INFO`](#enum-severity) | |
+| [`Masid::DEBUG`](#enum-severity) | |
 | [`TimestampFunc`](#type-timestampfunc) | Opsiyonal na custom timestamp function |
 
 </center>
@@ -30,9 +44,9 @@ Ito ang detalyadong talaan ng mga magagamit na API
 
 ## 🏗️ Konstruktor
 
-### `MuntingMasid(Stream &stream, const char* appName, Severity minLevel = DEBUG, TimestampFunc tsFunc = nullptr)`
+### `Masid(Stream &stream, const char* logName, Severity minLevel = INFO, TimestampFunc tsFunc = nullptr)`
 
-**Layunin:** Gumawa ng bagong `MuntingMasid` logger object na isinusulat ang mga log sa ibinigay na `Stream`.
+**Layunin:** Gumawa ng bagong `Masid` logger object na isinusulat ang mga log sa ibinigay na `Stream`.
 
 <center>
 

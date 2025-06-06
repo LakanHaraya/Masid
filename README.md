@@ -18,22 +18,22 @@
 
 </div>
 
-Ang **Masid** ay isang magaan at modular na aklatan para sa paglagdas
+Ang **Masid** ay isang magaan at modular na aklatan para sa paglista
 ng mensahe (*message logging*) ayon sa antas ng kalubhaan (*severity level*), gaya ng `Masid::DEBUG`,
 `Masid::INFO`, `Masid::ERROR`, atbp., batay sa lohika ng syslog sa [RFC 5424:2009](https://datatracker.ietf.org/doc/html/rfc5424). 
 
-Ginagamit nito ang anumang `Stream` objek (gaya ng `Serial`, `SoftwareSerial`, `File`, atbp.) bilang output ng lagdas, na maaaring ikahon gamit ang tatakna (*timestamp*) at ngalan ng aplikasyon.
+Ginagamit nito ang anumang `Stream` objek (gaya ng `Serial`, `SoftwareSerial`, `File`, atbp.) bilang output ng listahan, na maaaring ikahon gamit ang tatakna (*timestamp*), antas ng kalubhaan (*severity*), pangalan ng tagalista (*logger*), opsiyonal na tag para sa karagdagang konteksto, at maikling mensahe na nais mong iparating sa gumagamit.
 
 > Bahagi ito ng *Proyektong LundayHangin* ngunit maaari ring gamitin sa
 > anumang embedded system o Arduino-based na proyekto na nangangailangan ng
-> malinaw at sistematikong paglagdatos ng mga pangyayari.
+> malinaw at sistematikong paglista ng mga pangyayari.
 
 ---
 
 ## Mga Tampok
 
 - Simpleng logging interface para sa iba't ibang severity levels.
-- Suporta sa customizable timestamp function at log tags.
+- Suporta sa customizable timestamp function at opsiyonal na log context tags.
 - Kakayahang mag-log gamit ang iba't ibang `Stream` output (e.g., `Serial`, `SoftwareSerial`, `File`).
 - Nagbibigay ng kontrol sa minimum na severity level (`setMinSeverity()`).
 - Format ng log messages na madaling basahin at i-parse.

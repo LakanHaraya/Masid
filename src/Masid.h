@@ -9,7 +9,7 @@ typedef const char* (*TimestampFunc)();
  * @brief Lumilikha ng bagong logger na maaaring ikumpigura para sa structured logging.
  *
  * Pinapagana ng konstruktor na ito ang pagtatala ng mga log message gamit ang tinukoy
- * na output stream, pangalan ng application, antas ng minimum na severity, timestamp function,
+ * na output stream, pangalan ng logger, antas ng pinakamababang severity na maaaring itala, pinasadyang timestamp function,
  * at opsiyonal na tag para sa karagdagang konteksto.
  * 
  * @param stream   (Hinihingi) Output stream kung saan ilalathala ang mga log (hal. `Serial`, `SoftwareSerial`, `File`, atbp.).
@@ -56,7 +56,7 @@ class Masid {
         };
 
         // Kompletong konstruktor
-        Masid(Stream &stream, const char* logName, Severity minLevel = Masid::DEBUG, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
+        Masid(Stream &stream, const char* logName, Severity minLevel = Masid::INFO, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
 
         // Lagdas (Log)
         void emergency(const String& message);  
@@ -68,14 +68,14 @@ class Masid {
         void info(const String& message);
         void debug(const String& message);
 
-        // Panakda (Setter)
+        // Pantakda (Setter)
         void setMinSeverity(Severity level);
         void setTag(const char* tag);
         void setStream(Stream &stream);        
         void setTsFunc(TimestampFunc tsFunc);  
         void resetLogCount(); 
 
-        // Panguha (Getter)
+        // Pangkuha (Getter)
         size_t getLogCount() const;
         const char* getMinSeverity() const;
 
