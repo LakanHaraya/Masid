@@ -18,7 +18,7 @@ class Masid {
         };
 
         enum LogFormat : uint8_t {
-            PLAIN,      /**< Simpleng format (default). */
+            SIMPLE,      /**< Simpleng format (default). */
             CSV,        /**< Comma-separated format. */
             JSON        /**< Structured format para sa machine-parsing. */
         };
@@ -29,7 +29,7 @@ class Masid {
             const char* logName,
             Severity minLevel = Masid::INFO,
             TimestampFunc tsFunc = nullptr,
-            LogFormat format = PLAIN,
+            LogFormat format = SIMPLE,
             const char* tag = nullptr
         );
 
@@ -59,20 +59,20 @@ class Masid {
         const char* getMinSeverityLabel() const;
         Severity getMinSeverity() const;
         LogFormat getLogFormat() const;
+        const char* getLogFormatLabel() const;
     
-
     private: 
         Stream* _stream;
         const char* _logName;
         Severity _minLevel;
         TimestampFunc _timestampFunc;
-        LogFormat _format = PLAIN;
+        LogFormat _format = SIMPLE;
         const char* _tag;
         size_t _logCount = 0;           /** Bilang ng mga log entry */
 
         const char* _severityLabel(Severity severity) const;
         void _log(Severity severity, const char* message);
-        void _logPlain(Severity severity, const char* message);
+        void _logSimple(Severity severity, const char* message);
         void _logCSV(Severity severity, const char* message);
         void _logJSON(Severity severity, const char* message);
 };

@@ -64,8 +64,8 @@ void Masid::_log(Severity severity, const char* message) {
 
     // Ihain sa tamang output format handler
     switch (_format) {
-        case PLAIN:
-            _logPlain(severity, message);
+        case SIMPLE:
+            _logSimple(severity, message);
             break;
         case CSV:
             _logCSV(severity, message);
@@ -74,11 +74,11 @@ void Masid::_log(Severity severity, const char* message) {
             _logJSON(severity, message);
             break;
         default:
-            _logPlain(severity, message);  // Default sa PLAIN kung hindi kilala ang format
+            _logSimple(severity, message);  // Default sa SIMPLE kung hindi kilala ang format
     }
 }
 
-void Masid::_logPlain(Severity severity, const char* message) {
+void Masid::_logSimple(Severity severity, const char* message) {
     if (_timestampFunc) {
         _stream->print(_timestampFunc());
     } else {
@@ -187,4 +187,13 @@ const char* Masid::getTag() const {
 
 const char* Masid::getLogName() const {
     return _logName; 
+}
+
+const char* Masid::getLogFormatLabel() const {
+    switch (_format) {
+        case SIMPLE: return "SIMPLE";
+        case CSV: return "CSV";
+        case JSON: return "JSON";
+        default: return "DI-ALAM"; 
+    }
 }

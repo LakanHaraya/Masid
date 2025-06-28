@@ -166,7 +166,7 @@ const char* getTag() const;
 LogFormat getLogFormat() const;
 ```
 
-**Layunin:** Ibalik ang kasalukuyang format na ginagamit sa pag-output ng log entry.
+**Layunin:** Ibalik ang kasalukuyang format na ginagamit sa pag-output ng log entry bilang `enum` (lohika).
 
 <center>
 
@@ -175,6 +175,20 @@ LogFormat getLogFormat() const;
 | `LogFormat` | `enum` | Ang kasalukuyang setting para sa log format output. |
 
 </center>
+
+---
+
+### `getLogFormatLabel()`
+
+``` cpp
+const char* getLogFormatLabel() const
+```
+
+**Layunin:** Ibalik ang kasalukuyang log format bilang string label (`"PLAIN"`, `"CSV"`, `"JSON"`).
+
+| Nagbabalik | Uri | Paliwanag |
+|------------|-----|-----------|
+| `const char*` | `String` | Pangalan ng kasalukuyang log format para sa display o debug |
 
 ---
 

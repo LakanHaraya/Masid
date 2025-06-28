@@ -24,14 +24,14 @@ const char* getTimestamp() {
 }
 
 // Instantiate the logger
-Masid logger(Serial, "LogDemo", Masid::INFO, getTimestamp, Masid::PLAIN, "TEST");
+Masid logger(Serial, "LogDemo", Masid::INFO, getTimestamp, Masid::SIMPLE, "TEST");
 
 void setup() {
     Serial.begin(115200);
     while (!Serial);
 
     // -------- PLAIN FORMAT --------
-    logger.setLogFormat(Masid::PLAIN);
+    logger.setLogFormat(Masid::SIMPLE);
     logger.notice("Ito ay plain log output.");
     logger.info("Gamit ito sa Serial Monitor.");
     
@@ -47,9 +47,11 @@ void setup() {
 
     // -------- Log Format Reflection --------
     Masid::LogFormat fmt = logger.getLogFormat();
-    logger.setLogFormat(Masid::PLAIN);
+    logger.setLogFormat(Masid::SIMPLE);
     logger.info(String("Kasulukuyang format (bilang enum): ") + fmt);
     logger.info(String("Aktuwal na tag: ") + logger.getTag());
+    logger.info(String("Logger name: ") + logger.getLogName());
+    logger.notice(String("Format ngayon: ") + logger.getLogFormatLabel());
 }
 
 void loop() {
