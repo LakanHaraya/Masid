@@ -43,9 +43,21 @@ Ito ang detalyadong talaan ng mga magagamit na API
 
 ## 🏗️ Konstruktor
 
-### `Masid(Stream &stream, const char* logName, Severity minLevel = INFO, TimestampFunc tsFunc = nullptr)`
+### `Masid`
 
-**Layunin:** Gumawa ng bagong `Masid` logger object na isinusulat ang mga log sa ibinigay na `Stream`.
+``` cpp
+Masid(
+    Stream &stream,
+    const char* logName,
+    Severity minLevel = Masid::INFO,
+    TimestampFunc tsFunc = nullptr,
+    LogFormat format = PLAIN,
+    const char* tag = nullptr
+);
+```
+
+
+**Layunin:** Gumawa ng bagong `Masid` logger instance na isinusulat ang mga log sa ibinigay na `Stream`.
 
 <center>
 
@@ -54,9 +66,19 @@ Ito ang detalyadong talaan ng mga magagamit na API
 | `stream` | `Stream&` | Stream object (tulad ng `Serial`) kung saan ipapalabas ang mga log |
 | `logName` | `const char*` | Pangalan ng application na ilalagay sa log |
 | `minLevel` | `Severity` | *Opsiyonal*. Pinakamababang log level na tatanggapin. Default: `DEBUG` |
-| `tsFunc` | `TimestampFunc` | *Opsiyonal*. Function pointer para sa custom timestamp function |
+| `tsFunc` | `TimestampFunc` | *Opsiyonal*. Function pointer para sa custom timestamp function. Default: `[---]` |
+| `format` | `LogFormat` | *Opsiyonal*. Uri ng output format (`PLAIN`, `CSV`, `JSON`). Default: `PLAIN` |
+| `tag` | `const char*` | *Opsiyonal*. Karagdagang tag pangkonteksto (hal., `"SENSOR"`) |
 
 </center>
+
+> #### Halimbawa ng Gamit
+> 
+> ``` cpp
+> Masid logger143(Serial, "MotorSys", Masid::WARNING, getTimestamp, Masid::JSON, "MOTOR");
+> ```
+> **Sa halimbawang ito:**  
+> Ipinakita ang pagbuo ng isang logger na may mga itinakdang kumpigurasyon.
 
 ---
 

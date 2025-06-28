@@ -4,44 +4,6 @@
 
 typedef const char* (*TimestampFunc)();
 
-/**
- * @class Masid
- * @brief Lumilikha ng bagong logger na maaaring ikumpigura para sa structured logging.
- *
- * Pinapagana ng konstruktor na ito ang pagtatala ng mga log message gamit ang tinukoy
- * na output stream, pangalan ng logger, antas ng pinakamababang severity na maaaring itala, pinasadyang timestamp function,
- * at opsiyonal na tag para sa karagdagang konteksto.
- * 
- * @param stream   (Hinihingi) Output stream kung saan ilalathala ang mga log (hal. `Serial`, `SoftwareSerial`, `File`, atbp.).
- * @param logName  (Hinihingi) Pangalan ng logger o component na naglalabas ng log.
- * @param minLevel (Opsiyonal) Itakda ang minimum na severity level na ilalabas sa output. Default ay `Masid::DEBUG`.
- * @param tsFunc   (Opsiyonal) Timestamp function na magbabalik ng string (hal. oras). Default ay `nullptr`.
- * @param tag      (Opsiyonal) Tag para sa mga log upang magbigay ng karagdagang konteksto. Default ay `nullptr`.
- * 
- * @note - Kung walang `timestamp function`, walang timestamp na ilalabas sa log output.
- * 
- * @note - Ang makikitang log format sa output: `TIMESTAMP [SEVERITY] [LOGNAME] (Tag) Brief message.`
- * 
- * ### Mga Halimbawa ng Paggamit:
- * 
- * ```
- * // Pinakasimple
- * Masid masid1(Serial, "Demo1");
- * // Maglalabas: ` TIMESTAMP [DEBUG+] [Demo1] (Tag) Brief message. `
- * 
- * // May minimum severity
- * Masid masid2(Serial, "Demo2", Masid::INFO);
- * // Maglalabas: ` TIMESTAMP [INFO+] [Demo2] (Tag) Brief message. `
- * 
- * // May timestamp function
- * Masid masid3(Serial, "Demo3", Masid::DEBUG, getMillis);
- * // Maglalabas: ` 12345ms [DEBUG+] [Demo3] (Tag) Brief message. `
- * 
- * // Kompletong instantiation
- * Masid masid4(Serial, "Demo4", Masid::WARN, nullptr, "AkingTag");
- * // Maglalabas: ` [---] [WARN+] [Demo4] (Tag) Brief message. `
- * ```
- */
 class Masid {
     public:
         enum Severity : uint8_t {
@@ -62,7 +24,14 @@ class Masid {
         };
 
         // Kompletong konstruktor
-        Masid(Stream &stream, const char* logName, Severity minLevel = Masid::INFO, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
+        Masid(
+            Stream &stream,
+            const char* logName,
+            Severity minLevel = Masid::INFO,
+            TimestampFunc tsFunc = nullptr,
+            LogFormat format = PLAIN,
+            const char* tag = nullptr
+        );
 
         // Tagalista (Log)
         void emergency(const String& message);  
@@ -80,11 +49,11 @@ class Masid {
         void setStream(Stream &stream);        
         void setTsFunc(TimestampFunc tsFunc);  
         void resetLogCount(); 
-        bool shouldLog(Severity level) const;
         void setLogFormat(LogFormat format);
 
         // Pangkuha (Getter)
         size_t getLogCount() const;
+        bool shouldLog(Severity level) const;
         const char* getMinSeverityLabel() const;
         Severity getMinSeverity() const;
         LogFormat getLogFormat() const;
@@ -94,13 +63,12 @@ class Masid {
         const char* _logName;
         Severity _minLevel;
         TimestampFunc _timestampFunc;
+        LogFormat _format = PLAIN;
         const char* _tag;
         size_t _logCount = 0;           /** Bilang ng mga log entry */
 
         const char* _severityLabel(Severity severity) const;
         void _log(Severity severity, const char* message);
-
-        LogFormat _format = PLAIN;
         void _logPlain(Severity severity, const char* message);
         void _logCSV(Severity severity, const char* message);
         void _logJSON(Severity severity, const char* message);

@@ -6,11 +6,18 @@
 #include "Masid.h"
 
 // Kompletong konstruktor
-Masid::Masid(Stream &stream, const char* logName, Severity minLevel, TimestampFunc tsFunc, const char* tag) 
+Masid::Masid(
+    Stream &stream, 
+    const char* logName, 
+    Severity minLevel, 
+    TimestampFunc tsFunc, 
+    LogFormat format,
+    const char* tag) 
     : _stream(&stream),
       _logName(logName),
       _minLevel(minLevel),
       _timestampFunc(tsFunc),
+      _format(format),
       _tag(tag),
       _logCount(0) {}
 
@@ -30,10 +37,6 @@ void Masid::setStream(Stream &stream) {
 
 void Masid::setTsFunc(TimestampFunc tsFunc) {
     _timestampFunc = tsFunc;    // Pinapalitan ang timestamp function
-}
-
-bool Masid::shouldLog(Severity level) const {
-    return level <= _minLevel;  // Nagbabalik ng true kung ang severity level ay dapat i-log
 }
 
 void Masid::setLogFormat(LogFormat format) {
@@ -160,6 +163,10 @@ size_t Masid::getLogCount() const {
 
 void Masid::resetLogCount() {
     _logCount = 0;
+}
+
+bool Masid::shouldLog(Severity level) const {
+    return level <= _minLevel;  // Nagbabalik ng true kung ang severity level ay dapat i-log
 }
 
 const char* Masid::getMinSeverityLabel() const {

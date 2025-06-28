@@ -24,7 +24,7 @@ const char* getTimestamp() {
 }
 
 // Instantiate the logger
-Masid logger(Serial, "LogDemo", Masid::INFO, getTimestamp, "TEST");
+Masid logger(Serial, "LogDemo", Masid::INFO, getTimestamp, Masid::PLAIN, "TEST");
 
 void setup() {
     Serial.begin(115200);
