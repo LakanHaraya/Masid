@@ -5,42 +5,36 @@ Ito ang detalyadong talaan ng mga magagamit na API
 
 ---
 
-## Talaan ng API
+## 📘 Talaan ng API
 
-<center>
-
-| API | Paggamit |
-| :-- | :-- |
-| [`Masid`](#muntingmasidstream-stream-const-char-appname-severity-minlevel--debug-timestampfunc-tsfunc--nullptr) | Konstruktor – paglikha ng halimbagay |
-| [`emergency(...)`](#mga-pinaikling-metodo) | Magsulat ng EMERGENCY log |
-| [`alert(...)`](#mga-pinaikling-metodo) | Magsulat ng ALERT log |
-| [`critical(...)`](#mga-pinaikling-metodo) | Magsulat ng CRITICAL log |
-| [`error(...)`](#mga-pinaikling-metodo) | Magsulat ng ERROR log |
-| [`warning(...)`](#mga-pinaikling-metodo) | Magsulat ng WARNING log |
-| [`notice(...)`](#mga-pinaikling-metodo) | Magsulat ng NOTICE log |
-| [`info(...)`](#mga-pinaikling-metodo) | Magsulat ng INFO log |
-| [`debug(...)`](#mga-pinaikling-metodo) | Magsulat ng DEBUG log |
-| [`setMinSeverity(...)`](#void-setminimumseverityseverity-level) | Itinatakda ang pinakamababang severity level na papayagang itala |
-| [`setTag(...)`]() | |
-| [`setStream(...)`]() | |
-| [`setTsFunc(...)`]() | |
-| [`shouldLog()`](#shouldlog) | Tukuyin kung ang isang log entry ay dapat i-output |
-| [`resetLogCount(...)`]() | |
-| [`getLogCount()`]() | |
-| [`setTag(...)`]() | |
-| [`getMinSeverity(...)`]() | |
-| [`getMinSeverityLabel(...)`]() | |
-| [`Masid::EMERGENCY`](#enum-severity) | |
-| [`Masid::ALERT`](#enum-severity) | |
-| [`Masid::CRITICAL`](#enum-severity) | |
-| [`Masid::ERROR`](#enum-severity) | |
-| [`Masid::WARNING`](#enum-severity) | |
-| [`Masid::NOTICE`](#enum-severity) | |
-| [`Masid::INFO`](#enum-severity) | |
-| [`Masid::DEBUG`](#enum-severity) | |
-| [`TimestampFunc`](#type-timestampfunc) | Opsiyonal na custom timestamp function |
-
-</center>
+[`Masid`](#muntingmasidstream-stream-const-char-appname-severity-minlevel--debug-timestampfunc-tsfunc--nullptr)
+[`emergency(...)`](#mga-pinaikling-metodo)
+[`alert(...)`](#mga-pinaikling-metodo)
+[`critical(...)`](#mga-pinaikling-metodo) 
+[`error(...)`](#mga-pinaikling-metodo)
+[`warning(...)`](#mga-pinaikling-metodo)
+[`notice(...)`](#mga-pinaikling-metodo)
+[`info(...)`](#mga-pinaikling-metodo)
+[`debug(...)`](#mga-pinaikling-metodo)
+[`setMinSeverity(...)`](#void-setminimumseverityseverity-level)
+[`setTag(...)`]()
+[`setStream(...)`]()
+[`setTsFunc(...)`]()
+[`shouldLog()`](#shouldlog)
+[`resetLogCount(...)`]()
+[`getLogCount()`]()
+[`setTag(...)`]()
+[`getMinSeverity()`](#getminseverity)
+[`getMinSeverityLabel()`](#getminseveritylabel)
+[`Masid::EMERGENCY`](#enum-severity)
+[`Masid::ALERT`](#enum-severity)
+[`Masid::CRITICAL`](#enum-severity)
+[`Masid::ERROR`](#enum-severity)
+[`Masid::WARNING`](#enum-severity)
+[`Masid::NOTICE`](#enum-severity)
+[`Masid::INFO`](#enum-severity)
+[`Masid::DEBUG`](#enum-severity)
+[`TimestampFunc`](#type-timestampfunc)
 
 ---
 
@@ -82,9 +76,56 @@ Lahat ng mas mababa rito ay hindi ilalabas.
 
 ### `getMinSeverity()`
 
+``` cpp
+Severity getMinSeverity() const;
+```
+
+**Layunin:** Kuhanin ang kasalukuyang itinakdang minimum severity level ng logger bilang `Severity` enum value.  
+Ito ay maaaring gamitin sa kondisyonal na lohika upang malaman kung anong uri ng mga log entry ang papayagang ipalabas.
+
+<center>
+
+| Nagbabalik | Uri | Paliwanag |
+|--------|-----|-----------|
+| `Severity` | `enum` | Ang kasalukuyang log threshold na itinakda gamit ang `setMinSeverity()`. |
+
+</center>
+
+> #### Halimbawa ng Gamit
+>
+> ``` cpp
+> Masid::Severity currentLevel = logger.getMinSeverity();
+> ```
+> **Sa halimbawang ito:**  
+> Ipinakita ang retrieval ng severity bilang `enum` (lohika)
+> 
+
+
 ---
 
 ### `getMinSeverityLabel()`
+
+``` cpp
+const char* getMinSeverityLabel() const;
+```
+
+**Layunin:** Ibalik ang kasalukuyang minimum severity level bilang *4-character string label* (e.g., `"IMPO"`, `"DALI"`), upang magamit sa user interface, log headers, o debug display.
+
+<center>
+
+| Nagbabalik | Uri | Paliwanag |
+|--------|-----|-----------|
+| `const char*` | `char array` | Ang string label ng kasalukuyang `minSeverity`, gaya ng ginagamit sa log output. |
+
+</center>
+
+> #### Halimbawa ng Gamit
+> 
+> ``` cpp
+> Serial.println(String("Current severity level: ") + logger.getMinSeverityLabel());
+> ```
+> **Sa halimbawang ito:**  
+> Ipinakita ang severity bilang `label` (user-facing)
 
 ---
 
@@ -104,11 +145,14 @@ Gamit ito upang **maiwasan ang overhead** ng pagbuo ng log message (tulad ng `St
 |----------|-----|-----------|
 | `level` | `Severity` | Antas ng log na nais suriin kung papasa sa kasalukuyang log threshold. |
 
+| Nagbabalik | Uri | Paliwanag |
+| --- | --- | --- |
+| `true` | `bool` | Kung ang `level` ay katumbas o mas mataas kaysa `minSeverity`. |
+| `false` | `bool` | Kung ang `level` ay mas mababa kaysa `minSeverity`. |
+
 </center>
 
-**Nagbabalik:** `true` kung ang ibinigay na severity ay katumbas o mas mataas kaysa `minSeverity`; kung hindi, `false`.
-
-> #### Halimbawa ng Gamit 🧪
+> #### Halimbawa ng Gamit
 > 
 > ```cpp
 > if (logger.shouldLog(Masid::DEBUG)) {
