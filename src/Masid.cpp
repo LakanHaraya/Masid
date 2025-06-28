@@ -114,7 +114,7 @@ size_t Masid::getLogCount() const {
     return _logCount;
 }
 
-const char* Masid::getMinSeverity() const {
+const char* Masid::getMinSeverityLabel() const {
     return _severityLabel(_minLevel);
 }
 

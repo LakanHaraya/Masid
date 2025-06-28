@@ -78,7 +78,7 @@ class Masid {
 
         // Pangkuha (Getter)
         size_t getLogCount() const;
-        const char* getMinSeverity() const;
+        const char* getMinSeverityLabel() const;
 
     private: 
         Stream* _stream;
