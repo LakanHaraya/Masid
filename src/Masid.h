@@ -55,6 +55,12 @@ class Masid {
             DEBUG       /**< DALISAP: Detalyado para sa debugging. */
         };
 
+        enum LogFormat : uint8_t {
+            PLAIN,      /**< Simpleng format (default). */
+            CSV,        /**< Comma-separated format. */
+            JSON        /**< Structured format para sa machine-parsing. */
+        };
+
         // Kompletong konstruktor
         Masid(Stream &stream, const char* logName, Severity minLevel = Masid::INFO, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
 
@@ -75,11 +81,13 @@ class Masid {
         void setTsFunc(TimestampFunc tsFunc);  
         void resetLogCount(); 
         bool shouldLog(Severity level) const;
+        void setLogFormat(LogFormat format);
 
         // Pangkuha (Getter)
         size_t getLogCount() const;
         const char* getMinSeverityLabel() const;
         Severity getMinSeverity() const;
+        LogFormat getLogFormat() const;
 
     private: 
         Stream* _stream;
@@ -91,4 +99,9 @@ class Masid {
 
         const char* _severityLabel(Severity severity) const;
         void _log(Severity severity, const char* message);
+
+        LogFormat _format = PLAIN;
+        void _logPlain(Severity severity, const char* message);
+        void _logCSV(Severity severity, const char* message);
+        void _logJSON(Severity severity, const char* message);
 };

@@ -35,6 +35,9 @@ Ito ang detalyadong talaan ng mga magagamit na API
 [`Masid::INFO`](#enum-severity)
 [`Masid::DEBUG`](#enum-severity)
 [`TimestampFunc`](#type-timestampfunc)
+[`Masid::PLAIN`](#masidplain-masidcsv-masidjson)
+[`Masid::CSV`](#masidplain-masidcsv-masidjson)
+[`Masid::JSON`](#masidplain-masidcsv-masidjson)
 
 ---
 
@@ -66,9 +69,48 @@ Lahat ng mas mababa rito ay hindi ilalabas.
 
 <center>
 
-| Parameter | Uri | Paliwanag |
+| Parametro | Uri | Paliwanag |
 |----------|-----|-----------|
 | `level` | `Severity` | Ang bagong threshold ng log filtering |
+
+</center>
+
+---
+
+### `setLogFormat(format)`
+
+``` cpp
+void setLogFormat(LogFormat format);
+```
+
+**Layunin:** Itakda ang format na gagamitin ng logger sa pag-output ng mga log entry.
+
+Kapaki-pakinabang kapag nais ng mas structured na logging (tulad ng CSV o JSON), para
+sa integrasyon sa ibang sistema, spreadsheet, o log parsers.
+
+<center>
+
+| Parametro | Uri | Paliwanag |
+| --- | --- | --- |
+| `format` | `LogFormat` | Isa sa `PLAIN`, `CSV`, o `JSON` |
+
+</center>
+
+---
+
+### `getLogFormat()`
+
+``` cpp
+LogFormat getLogFormat() const;
+```
+
+**Layunin:** Ibalik ang kasalukuyang format na ginagamit sa pag-output ng log entry.
+
+<center>
+
+| Nagbabalik | Uri | Paliwanag |
+| --- | --- | --- |
+| `LogFormat` | `enum` | Ang kasalukuyang setting para sa log format output. |
 
 </center>
 
@@ -212,6 +254,31 @@ priyoridad hanggang sa pinakamababa:
 | `Masid::NOTICE`    | `[PNSN]` | Karaniwang obserbasyon |
 | `Masid::INFO`      | `[IMPO]` | Pangkalahatang impormasyon |
 | `Masid::DEBUG`     | `[DALI]` | Debugging detail |
+
+</center>
+
+---
+
+### `Masid::PLAIN`, `Masid::CSV`, `Masid::JSON`
+
+``` cpp
+enum LogFormat : uint8_t {
+    PLAIN,
+    CSV,
+    JSON
+};
+```
+
+**Layunin:** Ginagamit bilang parametro sa `setLogFormat()` at return value ng `getLogFormat()`.
+
+Mga suportadong format ng log output sa Masid logger
+<center>
+
+| Halaga ng Enum | Kahulugan | Estilong Ipakikita |
+|------|-----------|-------|
+| `PLAIN` | Default human-readable format | `[ts] [SEV] [Name] (Tag) message` |
+| `CSV` | Comma-separated values | `ts,SEV,Name,Tag,message` |
+| `JSON` | Structured JSON log object | `{ "ts": "...", "sev": "...", ... }` |
 
 </center>
 

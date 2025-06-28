@@ -36,6 +36,10 @@ bool Masid::shouldLog(Severity level) const {
     return level <= _minLevel;  // Nagbabalik ng true kung ang severity level ay dapat i-log
 }
 
+void Masid::setLogFormat(LogFormat format) {
+    _format = format;  // Itinatakda ang log format
+}
+
 const char* Masid::_severityLabel(Severity severity) const {
     static const char* labels[] = {
         "KAGI", // Emergency
@@ -55,29 +59,69 @@ void Masid::_log(Severity severity, const char* message) {
 
     _logCount++;        // Itala ang bilang ng log entry
 
-    // Kung may timestamp function, tawagin ito at ilathala sa stream
+    // Ihain sa tamang output format handler
+    switch (_format) {
+        case PLAIN:
+            _logPlain(severity, message);
+            break;
+        case CSV:
+            _logCSV(severity, message);
+            break;
+        case JSON:
+            _logJSON(severity, message);
+            break;
+        default:
+            _logPlain(severity, message);  // Default sa PLAIN kung hindi kilala ang format
+    }
+}
+
+void Masid::_logPlain(Severity severity, const char* message) {
     if (_timestampFunc) {
         _stream->print(_timestampFunc());
     } else {
-        _stream->print("[---]");      // Walang tinakda
+        _stream->print("[---]");
     }
-    _stream->print(" ");
-    
-    _stream->print("[");
+    _stream->print(" [");
     _stream->print(_severityLabel(severity));
-    _stream->print("] ");
-
-    _stream->print("[");
+    _stream->print("] [");
     _stream->print(_logName);
     _stream->print("] ");
-
     if (_tag) {
         _stream->print("(");
         _stream->print(_tag);
         _stream->print(") ");
     }
-
     _stream->println(message);
+}
+
+void Masid::_logCSV(Severity severity, const char* message) {
+    if (_timestampFunc) {
+        _stream->print(_timestampFunc());
+    } else {
+        _stream->print("---");
+    }
+    _stream->print(",");
+    _stream->print(_severityLabel(severity));
+    _stream->print(",");
+    _stream->print(_logName);
+    _stream->print(",");
+    _stream->print(_tag ? _tag : "-");
+    _stream->print(",");
+    _stream->println(message);
+}
+
+void Masid::_logJSON(Severity severity, const char* message) {
+    _stream->print("{\"ts\":\"");
+    _stream->print(_timestampFunc ? _timestampFunc() : "---");
+    _stream->print("\",\"sev\":\"");
+    _stream->print(_severityLabel(severity));
+    _stream->print("\",\"src\":\"");
+    _stream->print(_logName);
+    _stream->print("\",\"tag\":\"");
+    _stream->print(_tag ? _tag : "-");
+    _stream->print("\",\"msg\":\"");
+    _stream->print(message);
+    _stream->println("\"}");
 }
 
 // Pinaikling metodo
@@ -124,4 +168,8 @@ const char* Masid::getMinSeverityLabel() const {
 
 Masid::Severity Masid::getMinSeverity() const {
     return _minLevel;
+}
+
+Masid::LogFormat Masid::getLogFormat() const {
+    return _format;
 }
