@@ -29,6 +29,7 @@ Ito ang detalyadong talaan ng mga magagamit na API
 | [`getLogCount()`]() | |
 | [`setTag(...)`]() | |
 | [`getMinSeverity(...)`]() | |
+| [`getMinSeverityLabel(...)`]() | |
 | [`Masid::EMERGENCY`](#enum-severity) | |
 | [`Masid::ALERT`](#enum-severity) | |
 | [`Masid::CRITICAL`](#enum-severity) | |
@@ -76,6 +77,14 @@ Lahat ng mas mababa rito ay hindi ilalabas.
 | `level` | `Severity` | Ang bagong threshold ng log filtering |
 
 </center>
+
+---
+
+### `getMinSeverity()`
+
+---
+
+### `getMinSeverityLabel()`
 
 ---
 

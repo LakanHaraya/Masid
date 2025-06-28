@@ -114,10 +114,14 @@ size_t Masid::getLogCount() const {
     return _logCount;
 }
 
+void Masid::resetLogCount() {
+    _logCount = 0;
+}
+
 const char* Masid::getMinSeverityLabel() const {
     return _severityLabel(_minLevel);
 }
 
-void Masid::resetLogCount() {
-    _logCount = 0;
+Masid::Severity Masid::getMinSeverity() const {
+    return _minLevel;
 }
