@@ -58,7 +58,7 @@ class Masid {
         // Kompletong konstruktor
         Masid(Stream &stream, const char* logName, Severity minLevel = Masid::INFO, TimestampFunc tsFunc = nullptr, const char* tag = nullptr);
 
-        // Lagdas (Log)
+        // Tagalista (Log)
         void emergency(const String& message);  
         void alert(const String& message);
         void critical(const String& message);
@@ -68,12 +68,13 @@ class Masid {
         void info(const String& message);
         void debug(const String& message);
 
-        // Pantakda (Setter)
+        // Pangtakda (Setter)
         void setMinSeverity(Severity level);
         void setTag(const char* tag);
         void setStream(Stream &stream);        
         void setTsFunc(TimestampFunc tsFunc);  
         void resetLogCount(); 
+        bool shouldLog(Severity level) const;
 
         // Pangkuha (Getter)
         size_t getLogCount() const;

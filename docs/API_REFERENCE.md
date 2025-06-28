@@ -24,6 +24,7 @@ Ito ang detalyadong talaan ng mga magagamit na API
 | [`setTag(...)`]() | |
 | [`setStream(...)`]() | |
 | [`setTsFunc(...)`]() | |
+| [`shouldLog()`](#shouldlog) | Tukuyin kung ang isang log entry ay dapat i-output |
 | [`resetLogCount(...)`]() | |
 | [`getLogCount()`]() | |
 | [`setTag(...)`]() | |
@@ -75,6 +76,39 @@ Lahat ng mas mababa rito ay hindi ilalabas.
 | `level` | `Severity` | Ang bagong threshold ng log filtering |
 
 </center>
+
+---
+
+### `shouldLog()`
+
+```cpp
+bool shouldLog(Severity level) const;
+```
+
+**Layunin:** Tukuyin kung ang isang log entry ay dapat i-output batay sa kasalukuyang minimum severity level (`minSeverity`).
+
+Gamit ito upang **maiwasan ang overhead** ng pagbuo ng log message (tulad ng `String` concatenation, sensor reads, o mahahabang kalkulasyon) kapag hindi naman ito ipapakita sa log.
+
+<center>
+
+| Parameter | Uri | Paliwanag |
+|----------|-----|-----------|
+| `level` | `Severity` | Antas ng log na nais suriin kung papasa sa kasalukuyang log threshold. |
+
+</center>
+
+**Nagbabalik:** `true` kung ang ibinigay na severity ay katumbas o mas mataas kaysa `minSeverity`; kung hindi, `false`.
+
+> #### Halimbawa ng Gamit 🧪
+> 
+> ```cpp
+> if (logger.shouldLog(Masid::DEBUG)) {
+>    logger.debug("Sensor reading: " + String(analogRead(A0)));
+> }
+> ```
+> **Sa halimbawang ito:**
+> 
+> Kung ang `minSeverity` ay mas mataas sa `DEBUG`, hindi na isasagawa ang `analogRead()` at `String` creation.
 
 ---
 

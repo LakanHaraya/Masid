@@ -32,6 +32,10 @@ void Masid::setTsFunc(TimestampFunc tsFunc) {
     _timestampFunc = tsFunc;    // Pinapalitan ang timestamp function
 }
 
+bool Masid::shouldLog(Severity level) const {
+    return level <= _minLevel;  // Nagbabalik ng true kung ang severity level ay dapat i-log
+}
+
 const char* Masid::_severityLabel(Severity severity) const {
     static const char* labels[] = {
         "KAGI", // Emergency
@@ -103,7 +107,7 @@ void Masid::debug(const String& message) {
 }
 
 // ------------------------
-// Mga Panguhang Metodo
+// Mga Pangkuhang Metodo
 // ------------------------
 
 size_t Masid::getLogCount() const {
