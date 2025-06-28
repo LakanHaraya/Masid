@@ -52,11 +52,14 @@ class Masid {
         void setLogFormat(LogFormat format);
 
         // Pangkuha (Getter)
+        const char* getLogName() const;
+        const char* getTag() const; 
         size_t getLogCount() const;
         bool shouldLog(Severity level) const;
         const char* getMinSeverityLabel() const;
         Severity getMinSeverity() const;
         LogFormat getLogFormat() const;
+    
 
     private: 
         Stream* _stream;

@@ -180,3 +180,11 @@ Masid::Severity Masid::getMinSeverity() const {
 Masid::LogFormat Masid::getLogFormat() const {
     return _format;
 }
+
+const char* Masid::getTag() const {
+    return _tag ? _tag : ""; 
+}
+
+const char* Masid::getLogName() const {
+    return _logName; 
+}

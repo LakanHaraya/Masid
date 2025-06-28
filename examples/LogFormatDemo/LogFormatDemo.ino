@@ -49,6 +49,7 @@ void setup() {
     Masid::LogFormat fmt = logger.getLogFormat();
     logger.setLogFormat(Masid::PLAIN);
     logger.info(String("Kasulukuyang format (bilang enum): ") + fmt);
+    logger.info(String("Aktuwal na tag: ") + logger.getTag());
 }
 
 void loop() {

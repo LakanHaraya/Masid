@@ -20,12 +20,15 @@ Ito ang detalyadong talaan ng mga magagamit na API
 [`setTag(...)`]()
 [`setStream(...)`]()
 [`setTsFunc(...)`]()
-[`shouldLog()`](#shouldlog)
 [`resetLogCount(...)`]()
+[`setLogFormat(...)`]()
+[`getLogName()`]()
+[`getTag()`]()
 [`getLogCount()`]()
-[`setTag(...)`]()
+[`getLogFormat()`]()
 [`getMinSeverity()`](#getminseverity)
 [`getMinSeverityLabel()`](#getminseveritylabel)
+[`shouldLog()`](#shouldlog)
 [`Masid::EMERGENCY`](#enum-severity)
 [`Masid::ALERT`](#enum-severity)
 [`Masid::CRITICAL`](#enum-severity)
@@ -120,6 +123,43 @@ sa integrasyon sa ibang sistema, spreadsheet, o log parsers.
 
 ---
 
+### `getLogName()`
+
+``` cpp
+const char* getLogName() const
+```
+
+**Layunin:** Ibalik ang identifier o pangalan ng kasalukuyang logger instance.
+
+<center>
+
+| Nagbabalik | Uri | Paliwanag |
+|------------|-----|-----------|
+| `const char*` | String | Pangalan ng logger (hal. `"FlightCtrl"`, `"SensorMgr"`) |
+
+</center>
+
+
+---
+
+### `getTag()`
+
+``` cpp
+const char* getTag() const;
+```
+
+**Layunin:** Ibalik ang kasalukuyang tag ng logger kung mayroon, o isang empty string kung wala.
+
+<center>
+
+| Nagbabalik | Uri | Paliwanag |
+|---|---|---|
+| `const char*` | `String` | Kasalukuyang tag identifier ng logger; `""` kung wala |
+
+</center>
+
+---
+
 ### `getLogFormat()`
 
 ``` cpp
@@ -163,7 +203,6 @@ Ito ay maaaring gamitin sa kondisyonal na lohika upang malaman kung anong uri ng
 > **Sa halimbawang ito:**  
 > Ipinakita ang retrieval ng severity bilang `enum` (lohika)
 > 
-
 
 ---
 
