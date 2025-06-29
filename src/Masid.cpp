@@ -47,15 +47,19 @@ void Masid::setLogFormat(LogFormat format) {
     _format = format;  // Itinatakda ang log format
 }
 
-bool Masid::addStream(Stream& stream) {
+bool Masid::addStream(Stream& stream, LogFormat format) {
     if (_streamCount >= MAX_STREAMS) return false;
-    _streams[_streamCount++] = &stream;
+
+    _streams[_streamCount].stream = &stream;
+    _streams[_streamCount].format = format;
+    
+    _streamCount++;
     return true;  // Nagdagdag ng bagong stream sa array
 }
 
-bool Masid::addFileStream(File& file) {
+bool Masid::addFileStream(File& file, LogFormat format) {
     if (!file) return false;    // Tiyaking bukas ang file
-    return addStream(*(Stream*)&file);  // Safe cast sa Stream
+    return addStream(*(Stream*)&file, format);  // Safe cast sa Stream
 }
 
 void Masid::clearStreams() {
@@ -81,86 +85,77 @@ const char* Masid::_severityLabel(Severity severity) const {
 }
 
 void Masid::_log(Severity severity, const char* message) {
-    if (severity > _minLevel) return; 
+    if (!shouldLog(severity)) return;
+    
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // if (severity > _minLevel) return; 
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    _logCount++;
 
-    _logCount++;        // Itala ang bilang ng log entry
+    for (uint8_t i = 0; i < _streamCount; ++i) {
+        Stream* s = _streams[i].stream;
+        LogFormat fmt = _streams[i].format;
 
-    // Ihain sa tamang output format handler
-    switch (_format) {
-        case SIMPLE:
-            _logSimple(severity, message);
-            break;
-        case CSV:
-            _logCSV(severity, message);
-            break;
-        case JSON:
-            _logJSON(severity, message);
-            break;
-        default:
-            _logSimple(severity, message);  // Default sa SIMPLE kung hindi kilala ang format
+        // Ihain sa tamang output format handler
+        switch (fmt) {
+            case SIMPLE: _logSimple(s, severity, message); break;
+            case CSV: _logCSV(s, severity, message); break;
+            case JSON: _logJSON(s, severity, message); break;
+            default: _logSimple(s, severity, message); 
+            // Default sa SIMPLE kung hindi kilala ang format
+        }
     }
 }
 
-void Masid::_logSimple(Severity severity, const char* message) {
-    for (uint8_t i = 0; i < _streamCount; ++i) {
-        Stream* s = _streams[i];
-
-        if (_timestampFunc) {
-            s->print(_timestampFunc());
-        } else {
-            s->print("[---]");
-        }
-        s->print(" [");
-        s->print(_severityLabel(severity));
-        s->print("] [");
-        s->print(_logName);
-        s->print("] ");
-        if (_tag) {
-            s->print("(");
-            s->print(_tag);
-            s->print(") ");
-        }
-        s->println(message);
+void Masid::_logSimple(Stream* s, Severity severity, const char* message) {
+    if (_timestampFunc) {
+        s->print(_timestampFunc());
+    } else {
+        s->print("[---]");
     }
+    s->print(" [");
+    s->print(_severityLabel(severity));
+    s->print("] [");
+    s->print(_logName);
+    s->print("] ");
+    if (_tag) {
+        s->print("(");
+        s->print(_tag);
+        s->print(") ");
+    }
+    s->println(message);
 }
 
-void Masid::_logCSV(Severity severity, const char* message) {
-    for (uint8_t i = 0; i < _streamCount; ++i) {
-        Stream* s = _streams[i];
-
-        if (_timestampFunc) {
-            s->print(_timestampFunc());
-        } else {
-            s->print("---");
-        }
-        s->print(",");
-        s->print(_severityLabel(severity));
-        s->print(",");
-        s->print(_logName);
-        s->print(",");
-        s->print(_tag ? _tag : "---");
-        s->print(",\"");
-        s->print(message);
-        s->println("\"");
+void Masid::_logCSV(Stream* s, Severity severity, const char* message) {
+    if (_timestampFunc) {
+        s->print(_timestampFunc());
+    } else {
+        s->print("---");
     }
+    s->print(",");
+    s->print(_severityLabel(severity));
+    s->print(",");
+    s->print(_logName);
+    s->print(",");
+    s->print(_tag ? _tag : "---");
+    s->print(",\"");
+    s->print(message);
+    s->println("\"");
 }
 
-void Masid::_logJSON(Severity severity, const char* message) {
-    for (uint8_t i = 0; i < _streamCount; ++i) {
-        Stream* s = _streams[i];
-
-        s->print("{\"ts\":\"");
-        s->print(_timestampFunc ? _timestampFunc() : "---");
-        s->print("\",\"sev\":\"");
-        s->print(_severityLabel(severity));
-        s->print("\",\"src\":\"");
-        s->print(_logName);
-        s->print("\",\"tag\":\"");
-        s->print(_tag ? _tag : "-");
-        s->print("\",\"msg\":\"");
-        s->print(message);
-        s->println("\"}");
-    }
+void Masid::_logJSON(Stream* s, Severity severity, const char* message) {
+    s->print("{\"ts\":\"");
+    s->print(_timestampFunc ? _timestampFunc() : "---");
+    s->print("\",\"sev\":\"");
+    s->print(_severityLabel(severity));
+    s->print("\",\"src\":\"");
+    s->print(_logName);
+    s->print("\",\"tag\":\"");
+    s->print(_tag ? _tag : "-");
+    s->print("\",\"msg\":\"");
+    s->print(message);
+    s->println("\"}");
 }
 
 // Pinaikling metodo

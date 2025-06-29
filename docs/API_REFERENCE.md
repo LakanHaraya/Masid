@@ -42,9 +42,9 @@ Ito ang detalyadong talaan ng mga magagamit na API
 [`Masid::INFO`](#enum-severity)
 [`Masid::DEBUG`](#enum-severity)
 [`TimestampFunc`](#type-timestampfunc)
-[`Masid::PLAIN`](#masidplain-masidcsv-masidjson)
-[`Masid::CSV`](#masidplain-masidcsv-masidjson)
-[`Masid::JSON`](#masidplain-masidcsv-masidjson)
+[`Masid::SIMPLE`](#masidsimple-masidcsv-masidjson)
+[`Masid::CSV`](#masidsimple-masidcsv-masidjson)
+[`Masid::JSON`](#masidsimple-masidcsv-masidjson)
 
 ---
 
@@ -297,11 +297,11 @@ priyoridad hanggang sa pinakamababa:
 
 ---
 
-### `Masid::PLAIN`, `Masid::CSV`, `Masid::JSON`
+### `Masid::SIMPLE`, `Masid::CSV`, `Masid::JSON`
 
 ``` cpp
 enum LogFormat : uint8_t {
-    PLAIN,
+    SIMPLE,
     CSV,
     JSON
 };
@@ -313,7 +313,7 @@ Mga suportadong format ng log output sa Masid logger
 
 | Halaga ng Enum | Kahulugan | Estilong Ipakikita |
 |------|-----------|-------|
-| `PLAIN` | Default human-readable format | `[ts] [SEV] [Name] (Tag) message` |
+| `SIMPLE` | Default human-readable format | `[ts] [SEV] [Name] (Tag) message` |
 | `CSV` | Comma-separated values | `ts,SEV,Name,Tag,message` |
 | `JSON` | Structured JSON log object | `{ "ts": "...", "sev": "...", ... }` |
 

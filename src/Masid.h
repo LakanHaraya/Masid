@@ -51,9 +51,9 @@ class Masid {
         void setTsFunc(TimestampFunc tsFunc);  
         void resetLogCount(); 
         void setLogFormat(LogFormat format);
-        bool addStream(Stream& stream);
+        bool addStream(Stream& stream, LogFormat format = SIMPLE);
         void clearStreams();
-        bool addFileStream(File& file);
+        bool addFileStream(File& file, LogFormat format = SIMPLE);
 
         // Pangkuha (Getter)
         const char* getLogName() const;
@@ -68,7 +68,11 @@ class Masid {
     
     private: 
         static const uint8_t MAX_STREAMS = 4; 
-        Stream* _streams[MAX_STREAMS];
+        struct StreamConfig {
+            Stream* stream;
+            LogFormat format;
+        };
+        StreamConfig _streams[MAX_STREAMS];
         uint8_t _streamCount = 0;
         const char* _logName;
         Severity _minLevel;
@@ -79,7 +83,7 @@ class Masid {
 
         const char* _severityLabel(Severity severity) const;
         void _log(Severity severity, const char* message);
-        void _logSimple(Severity severity, const char* message);
-        void _logCSV(Severity severity, const char* message);
-        void _logJSON(Severity severity, const char* message);
+        void _logSimple(Stream* s, Severity severity, const char* message);
+        void _logCSV(Stream* s, Severity severity, const char* message);
+        void _logJSON(Stream* s, Severity severity, const char* message);
 };
