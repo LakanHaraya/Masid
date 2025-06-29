@@ -47,18 +47,33 @@ void Masid::setLogFormat(LogFormat format) {
     _format = format;  // Itinatakda ang log format
 }
 
-bool Masid::addStream(Stream& stream, LogFormat format) {
-    if (_streamCount >= MAX_STREAMS) return false;
+bool Masid::hasStream(Stream& stream) const {
+    for (uint8_t i = 0; i < _streamCount; ++i) {
+        if (_streams[i].stream == &stream) {
+            return true;
+        }
+    }
+    return false;
+}
 
+bool Masid::addStreamIfAbsent(Stream& stream, LogFormat format) {
+    if (hasStream(stream)) return false; 
+    return addStream(stream, format); 
+}
+
+bool Masid::addStream(Stream& stream, LogFormat format) {
+    if (hasStream(stream)) return false; 
+    if (_streamCount >= MAX_STREAMS) return false;
     _streams[_streamCount].stream = &stream;
     _streams[_streamCount].format = format;
-    
     _streamCount++;
     return true;  // Nagdagdag ng bagong stream sa array
 }
 
 bool Masid::addFileStream(File& file, LogFormat format) {
     if (!file) return false;    // Tiyaking bukas ang file
+    Stream* asStream = static_cast<Stream*>(&file);
+    if (hasStream(*asStream)) return false;
     return addStream(*(Stream*)&file, format);  // Safe cast sa Stream
 }
 
@@ -90,7 +105,7 @@ void Masid::_log(Severity severity, const char* message) {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // if (severity > _minLevel) return; 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    
+
     _logCount++;
 
     for (uint8_t i = 0; i < _streamCount; ++i) {

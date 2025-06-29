@@ -44,6 +44,10 @@ class Masid {
         void info(const String& message);
         void debug(const String& message);
 
+        // Stream management utilities
+        bool hasStream(Stream& stream) const;
+        bool addStreamIfAbsent(Stream& stream, LogFormat format = SIMPLE);
+
         // Pangtakda (Setter)
         void setMinSeverity(Severity level);
         void setTag(const char* tag);
