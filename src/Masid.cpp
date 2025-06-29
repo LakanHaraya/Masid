@@ -13,13 +13,16 @@ Masid::Masid(
     TimestampFunc tsFunc, 
     LogFormat format,
     const char* tag) 
-    : _stream(&stream),
-      _logName(logName),
+    : _logName(logName),
       _minLevel(minLevel),
       _timestampFunc(tsFunc),
       _format(format),
       _tag(tag),
-      _logCount(0) {}
+      _logCount(0),
+      _streamCount(0)
+      {
+        addStream(stream);  // Tiyaking may default stream
+      }
 
 // -----------------------------------------
 
@@ -32,7 +35,8 @@ void Masid::setTag(const char* tag) {
 }
 
 void Masid::setStream(Stream &stream) {
-    _stream = &stream;      // Pinapalitan ang stream sa bagong ibinigay na Stream object
+    clearStreams();
+    addStream(stream);
 }
 
 void Masid::setTsFunc(TimestampFunc tsFunc) {
@@ -41,6 +45,20 @@ void Masid::setTsFunc(TimestampFunc tsFunc) {
 
 void Masid::setLogFormat(LogFormat format) {
     _format = format;  // Itinatakda ang log format
+}
+
+bool Masid::addStream(Stream& stream) {
+    if (_streamCount >= MAX_STREAMS) return false;
+    _streams[_streamCount++] = &stream;
+    return true;  // Nagdagdag ng bagong stream sa array
+}
+
+void Masid::clearStreams() {
+    _streamCount = 0;  // I-clear ang lahat ng streams
+}
+
+uint8_t Masid::getStreamCount() const {
+    return _streamCount;
 }
 
 const char* Masid::_severityLabel(Severity severity) const {
@@ -79,52 +97,65 @@ void Masid::_log(Severity severity, const char* message) {
 }
 
 void Masid::_logSimple(Severity severity, const char* message) {
-    if (_timestampFunc) {
-        _stream->print(_timestampFunc());
-    } else {
-        _stream->print("[---]");
+    for (uint8_t i = 0; i < _streamCount; ++i) {
+        Stream* s = _streams[i];
+
+        if (_timestampFunc) {
+            s->print(_timestampFunc());
+        } else {
+            s->print("[---]");
+        }
+        s->print(" [");
+        s->print(_severityLabel(severity));
+        s->print("] [");
+        s->print(_logName);
+        s->print("] ");
+        if (_tag) {
+            s->print("(");
+            s->print(_tag);
+            s->print(") ");
+        }
+        s->println(message);
     }
-    _stream->print(" [");
-    _stream->print(_severityLabel(severity));
-    _stream->print("] [");
-    _stream->print(_logName);
-    _stream->print("] ");
-    if (_tag) {
-        _stream->print("(");
-        _stream->print(_tag);
-        _stream->print(") ");
-    }
-    _stream->println(message);
 }
 
 void Masid::_logCSV(Severity severity, const char* message) {
-    if (_timestampFunc) {
-        _stream->print(_timestampFunc());
-    } else {
-        _stream->print("---");
+    for (uint8_t i = 0; i < _streamCount; ++i) {
+        Stream* s = _streams[i];
+
+        if (_timestampFunc) {
+            s->print(_timestampFunc());
+        } else {
+            s->print("---");
+        }
+        s->print(",");
+        s->print(_severityLabel(severity));
+        s->print(",");
+        s->print(_logName);
+        s->print(",");
+        s->print(_tag ? _tag : "---");
+        s->print(",\"");
+        s->print(message);
+        s->println("\"");
     }
-    _stream->print(",");
-    _stream->print(_severityLabel(severity));
-    _stream->print(",");
-    _stream->print(_logName);
-    _stream->print(",");
-    _stream->print(_tag ? _tag : "-");
-    _stream->print(",");
-    _stream->println(message);
 }
 
 void Masid::_logJSON(Severity severity, const char* message) {
-    _stream->print("{\"ts\":\"");
-    _stream->print(_timestampFunc ? _timestampFunc() : "---");
-    _stream->print("\",\"sev\":\"");
-    _stream->print(_severityLabel(severity));
-    _stream->print("\",\"src\":\"");
-    _stream->print(_logName);
-    _stream->print("\",\"tag\":\"");
-    _stream->print(_tag ? _tag : "-");
-    _stream->print("\",\"msg\":\"");
-    _stream->print(message);
-    _stream->println("\"}");
+    for (uint8_t i = 0; i < _streamCount; ++i) {
+        Stream* s = _streams[i];
+
+        s->print("{\"ts\":\"");
+        s->print(_timestampFunc ? _timestampFunc() : "---");
+        s->print("\",\"sev\":\"");
+        s->print(_severityLabel(severity));
+        s->print("\",\"src\":\"");
+        s->print(_logName);
+        s->print("\",\"tag\":\"");
+        s->print(_tag ? _tag : "-");
+        s->print("\",\"msg\":\"");
+        s->print(message);
+        s->println("\"}");
+    }
 }
 
 // Pinaikling metodo

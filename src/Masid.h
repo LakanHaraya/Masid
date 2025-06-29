@@ -50,6 +50,8 @@ class Masid {
         void setTsFunc(TimestampFunc tsFunc);  
         void resetLogCount(); 
         void setLogFormat(LogFormat format);
+        bool addStream(Stream& stream);
+        void clearStreams();
 
         // Pangkuha (Getter)
         const char* getLogName() const;
@@ -60,9 +62,12 @@ class Masid {
         Severity getMinSeverity() const;
         LogFormat getLogFormat() const;
         const char* getLogFormatLabel() const;
+        uint8_t getStreamCount() const;
     
     private: 
-        Stream* _stream;
+        static const uint8_t MAX_STREAMS = 4; 
+        Stream* _streams[MAX_STREAMS];
+        uint8_t _streamCount = 0;
         const char* _logName;
         Severity _minLevel;
         TimestampFunc _timestampFunc;
