@@ -22,12 +22,16 @@ Ito ang detalyadong talaan ng mga magagamit na API
 [`setTsFunc(...)`]()
 [`resetLogCount(...)`]()
 [`setLogFormat(...)`]()
+[`addStream(...)`]()
+[`clearStreams()`]()
+[`addFileStream()`]()
 [`getLogName()`]()
 [`getTag()`]()
 [`getLogCount()`]()
 [`getLogFormat()`]()
 [`getMinSeverity()`](#getminseverity)
 [`getMinSeverityLabel()`](#getminseveritylabel)
+[`getStreamCount()`]()
 [`shouldLog()`](#shouldlog)
 [`Masid::EMERGENCY`](#enum-severity)
 [`Masid::ALERT`](#enum-severity)
@@ -113,13 +117,9 @@ void setLogFormat(LogFormat format);
 Kapaki-pakinabang kapag nais ng mas structured na logging (tulad ng CSV o JSON), para
 sa integrasyon sa ibang sistema, spreadsheet, o log parsers.
 
-<center>
-
 | Parametro | Uri | Paliwanag |
 | --- | --- | --- |
 | `format` | `LogFormat` | Isa sa `PLAIN`, `CSV`, o `JSON` |
-
-</center>
 
 ---
 
@@ -131,14 +131,9 @@ const char* getLogName() const
 
 **Layunin:** Ibalik ang identifier o pangalan ng kasalukuyang logger instance.
 
-<center>
-
 | Nagbabalik | Uri | Paliwanag |
 |------------|-----|-----------|
 | `const char*` | String | Pangalan ng logger (hal. `"FlightCtrl"`, `"SensorMgr"`) |
-
-</center>
-
 
 ---
 
@@ -150,13 +145,9 @@ const char* getTag() const;
 
 **Layunin:** Ibalik ang kasalukuyang tag ng logger kung mayroon, o isang empty string kung wala.
 
-<center>
-
 | Nagbabalik | Uri | Paliwanag |
 |---|---|---|
 | `const char*` | `String` | Kasalukuyang tag identifier ng logger; `""` kung wala |
-
-</center>
 
 ---
 
@@ -168,13 +159,9 @@ LogFormat getLogFormat() const;
 
 **Layunin:** Ibalik ang kasalukuyang format na ginagamit sa pag-output ng log entry bilang `enum` (lohika).
 
-<center>
-
 | Nagbabalik | Uri | Paliwanag |
 | --- | --- | --- |
 | `LogFormat` | `enum` | Ang kasalukuyang setting para sa log format output. |
-
-</center>
 
 ---
 
@@ -201,13 +188,9 @@ Severity getMinSeverity() const;
 **Layunin:** Kuhanin ang kasalukuyang itinakdang minimum severity level ng logger bilang `Severity` enum value.  
 Ito ay maaaring gamitin sa kondisyonal na lohika upang malaman kung anong uri ng mga log entry ang papayagang ipalabas.
 
-<center>
-
 | Nagbabalik | Uri | Paliwanag |
 |--------|-----|-----------|
 | `Severity` | `enum` | Ang kasalukuyang log threshold na itinakda gamit ang `setMinSeverity()`. |
-
-</center>
 
 > #### Halimbawa ng Gamit
 >
@@ -228,13 +211,9 @@ const char* getMinSeverityLabel() const;
 
 **Layunin:** Ibalik ang kasalukuyang minimum severity level bilang *4-character string label* (e.g., `"IMPO"`, `"DALI"`), upang magamit sa user interface, log headers, o debug display.
 
-<center>
-
 | Nagbabalik | Uri | Paliwanag |
 |--------|-----|-----------|
 | `const char*` | `char array` | Ang string label ng kasalukuyang `minSeverity`, gaya ng ginagamit sa log output. |
-
-</center>
 
 > #### Halimbawa ng Gamit
 > 
@@ -256,8 +235,6 @@ bool shouldLog(Severity level) const;
 
 Gamit ito upang **maiwasan ang overhead** ng pagbuo ng log message (tulad ng `String` concatenation, sensor reads, o mahahabang kalkulasyon) kapag hindi naman ito ipapakita sa log.
 
-<center>
-
 | Parameter | Uri | Paliwanag |
 |----------|-----|-----------|
 | `level` | `Severity` | Antas ng log na nais suriin kung papasa sa kasalukuyang log threshold. |
@@ -266,8 +243,6 @@ Gamit ito upang **maiwasan ang overhead** ng pagbuo ng log message (tulad ng `St
 | --- | --- | --- |
 | `true` | `bool` | Kung ang `level` ay katumbas o mas mataas kaysa `minSeverity`. |
 | `false` | `bool` | Kung ang `level` ay mas mababa kaysa `minSeverity`. |
-
-</center>
 
 > #### Halimbawa ng Gamit
 > 
@@ -286,8 +261,6 @@ Gamit ito upang **maiwasan ang overhead** ng pagbuo ng log message (tulad ng `St
 
 Mga pinaikling paraan para magsulat ng log sa partikular na severity level:
 
-<center>
-
 | Metodo | Layunin |
 |--------|---------|
 | `void emergency(const char* message)` | Log bilang `EMERGENCY` |
@@ -299,15 +272,9 @@ Mga pinaikling paraan para magsulat ng log sa partikular na severity level:
 | `void info(const char* message)`      | Log bilang `INFO` |
 | `void debug(const char* message)`     | Log bilang `DEBUG` |
 
-</center>
-
-<center>
-
 | Parameter | Uri | Paliwanag |
 |----------|-----|-----------|
 | `message` | `const char*` | Mensaheng ilalabas |
-
-</center>
 
 ---
 
@@ -316,8 +283,6 @@ Mga pinaikling paraan para magsulat ng log sa partikular na severity level:
 **Layunin:**  
 Tumutukoy sa severity level ng isang log message mula sa pinakamataas na
 priyoridad hanggang sa pinakamababa:
-
-<center>
 
 | Value | Marka | Paliwanag |
 |------|-----------|-------|
@@ -329,8 +294,6 @@ priyoridad hanggang sa pinakamababa:
 | `Masid::NOTICE`    | `[PNSN]` | Karaniwang obserbasyon |
 | `Masid::INFO`      | `[IMPO]` | Pangkalahatang impormasyon |
 | `Masid::DEBUG`     | `[DALI]` | Debugging detail |
-
-</center>
 
 ---
 
@@ -347,15 +310,12 @@ enum LogFormat : uint8_t {
 **Layunin:** Ginagamit bilang parametro sa `setLogFormat()` at return value ng `getLogFormat()`.
 
 Mga suportadong format ng log output sa Masid logger
-<center>
 
 | Halaga ng Enum | Kahulugan | Estilong Ipakikita |
 |------|-----------|-------|
 | `PLAIN` | Default human-readable format | `[ts] [SEV] [Name] (Tag) message` |
 | `CSV` | Comma-separated values | `ts,SEV,Name,Tag,message` |
 | `JSON` | Structured JSON log object | `{ "ts": "...", "sev": "...", ... }` |
-
-</center>
 
 ---
 

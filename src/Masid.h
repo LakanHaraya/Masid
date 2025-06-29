@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <SD.h>
 
 typedef const char* (*TimestampFunc)();
 
@@ -52,6 +53,7 @@ class Masid {
         void setLogFormat(LogFormat format);
         bool addStream(Stream& stream);
         void clearStreams();
+        bool addFileStream(File& file);
 
         // Pangkuha (Getter)
         const char* getLogName() const;

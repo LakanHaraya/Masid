@@ -53,6 +53,11 @@ bool Masid::addStream(Stream& stream) {
     return true;  // Nagdagdag ng bagong stream sa array
 }
 
+bool Masid::addFileStream(File& file) {
+    if (!file) return false;    // Tiyaking bukas ang file
+    return addStream(*(Stream*)&file);  // Safe cast sa Stream
+}
+
 void Masid::clearStreams() {
     _streamCount = 0;  // I-clear ang lahat ng streams
 }
